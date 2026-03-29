@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tea Guide</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="nav-brand">
+      <span class="leaf-icon">&#127807;</span> Tea Guide
+    </div>
+    <div class="nav-links">
+      <button class="nav-btn active" data-view="catalog">Tea Catalog</button>
+      <button class="nav-btn" data-view="mixology">Mixology</button>
+      <button class="nav-btn" data-view="quiz">Find My Tea</button>
+      <button class="nav-btn" data-view="wellness">Tea Remedy</button>
+      <button class="nav-btn" data-view="store">Store</button>
+    </div>
+  </nav>
+
+  <header class="hero" id="hero-catalog">
+    <h1>Discover Your Perfect Tea</h1>
+    <p>Browse 120 teas across all caffeine levels and find your ideal cup.</p>
+  </header>
+
+  <header class="hero hero-mix hidden" id="hero-mixology">
+    <h1>Tea Mixology</h1>
+    <p>51 creative recipes — milk-based lattes, iced coolers, tonics, and more.</p>
+  </header>
+
+  <header class="hero hero-quiz hidden" id="hero-quiz">
+    <h1>Find My Perfect Tea</h1>
+    <p>Answer a few questions and we'll recommend the best tea for right now.</p>
+  </header>
+
+  <header class="hero hero-store hidden" id="hero-store">
+    <h1>Tea Store</h1>
+    <p>Shop 120 teas from trusted retailers — with real prices, product images, and direct links.</p>
+  </header>
+
+  <header class="hero hero-wellness hidden" id="hero-wellness">
+    <h1>Tea Remedy Guide</h1>
+    <p>Find teas that soothe common ailments and support your body's natural healing.</p>
+  </header>
+
+  <!-- CATALOG VIEW -->
+  <main id="view-catalog">
+    <section class="controls">
+      <input type="text" id="search" placeholder="Search teas..." class="search-input" />
+      <div class="filter-buttons">
+        <button class="filter-btn active" data-filter="all">All (120)</button>
+        <button class="filter-btn" data-filter="high">High Caffeine</button>
+        <button class="filter-btn" data-filter="medium">Medium Caffeine</button>
+        <button class="filter-btn" data-filter="low">Low Caffeine</button>
+        <button class="filter-btn" data-filter="none">Caffeine-Free</button>
+        <button class="filter-btn" data-filter="morning">Morning</button>
+        <button class="filter-btn" data-filter="afternoon">Afternoon</button>
+        <button class="filter-btn" data-filter="evening">Evening</button>
+        <button class="filter-btn" data-filter="iced">Iced</button>
+        <button class="filter-btn" data-filter="fruity">Fruity</button>
+      </div>
+    </section>
+    <section class="tea-grid" id="tea-grid"></section>
+  </main>
+
+  <!-- MIXOLOGY VIEW -->
+  <main id="view-mixology" class="hidden">
+    <section class="controls">
+      <input type="text" id="mix-search" placeholder="Search recipes..." class="search-input" />
+      <div class="filter-buttons">
+        <button class="mix-filter-btn active" data-filter="all">All (51)</button>
+        <button class="mix-filter-btn" data-filter="milk">Milk-Based</button>
+        <button class="mix-filter-btn" data-filter="water">Water-Based</button>
+        <button class="mix-filter-btn" data-filter="iced">Iced</button>
+        <button class="mix-filter-btn" data-filter="warming">Warming</button>
+        <button class="mix-filter-btn" data-filter="relaxing">Relaxing</button>
+        <button class="mix-filter-btn" data-filter="energizing">Energizing</button>
+      </div>
+    </section>
+
+    <section class="additive-strip" id="additive-strip">
+      <div class="additive-strip-label">Filter by Additive</div>
+      <div class="additive-chips" id="additive-chips"></div>
+    </section>
+
+    <section class="mix-grid" id="mix-grid"></section>
+  </main>
+
+  <!-- QUIZ VIEW -->
+  <main id="view-quiz" class="hidden">
+    <div class="quiz-container">
+      <div class="quiz-progress">
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        <span class="progress-label" id="progress-label">Question 1 of 6</span>
+      </div>
+      <div class="quiz-card" id="quiz-card"></div>
+      <div class="quiz-nav">
+        <button class="quiz-nav-btn" id="btn-prev" disabled>Back</button>
+        <button class="quiz-nav-btn primary" id="btn-next">Next</button>
+      </div>
+      <div class="quiz-result hidden" id="quiz-result"></div>
+    </div>
+  </main>
+
+  <!-- STORE VIEW -->
+  <main id="view-store" class="hidden">
+    <section class="controls store-controls">
+      <input type="text" id="store-search" placeholder="Search teas..." class="search-input" />
+      <div class="filter-buttons">
+        <button class="store-filter-btn active" data-filter="all">All</button>
+        <button class="store-filter-btn" data-filter="high">High Caffeine</button>
+        <button class="store-filter-btn" data-filter="medium">Medium Caffeine</button>
+        <button class="store-filter-btn" data-filter="low">Low Caffeine</button>
+        <button class="store-filter-btn" data-filter="none">Caffeine-Free</button>
+      </div>
+      <div class="filter-buttons store-price-filters">
+        <span class="store-filter-label">Price:</span>
+        <button class="store-price-btn active" data-price="all">All</button>
+        <button class="store-price-btn" data-price="under10">Under $10</button>
+        <button class="store-price-btn" data-price="10to20">$10 – $20</button>
+        <button class="store-price-btn" data-price="20to35">$20 – $35</button>
+        <button class="store-price-btn" data-price="over35">$35+</button>
+      </div>
+      <div class="store-sort-row">
+        <span class="store-filter-label">Sort:</span>
+        <select id="store-sort" class="store-sort-select">
+          <option value="name">Name (A–Z)</option>
+          <option value="price-asc">Price: Low to High</option>
+          <option value="price-desc">Price: High to Low</option>
+        </select>
+        <span class="store-count" id="store-count"></span>
+      </div>
+    </section>
+    <section class="store-grid" id="store-grid"></section>
+  </main>
+
+  <!-- WELLNESS VIEW -->
+  <main id="view-wellness" class="hidden">
+    <div class="wellness-container">
+      <div class="wellness-disclaimer">
+        <span class="disclaimer-icon">⚕️</span>
+        <div>
+          <strong>Medical Disclaimer</strong> — Tea is a supportive wellness aid, not a substitute for medical treatment.
+          These recommendations are for general comfort and wellbeing only. Always follow your doctor's advice and take
+          prescribed medication as directed. If symptoms are severe, worsening, or persistent, seek professional
+          medical care immediately.
+        </div>
+      </div>
+
+      <div id="wellness-step-1">
+        <h2 class="wellness-heading">What are you experiencing?</h2>
+        <p class="wellness-subheading">Select your primary symptom and we'll suggest the most helpful teas.</p>
+        <div class="ailment-grid" id="ailment-grid"></div>
+      </div>
+
+      <div id="wellness-step-2" class="hidden">
+        <button class="wellness-back-btn" id="wellness-back">&#8592; Back to symptoms</button>
+        <div id="wellness-result"></div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Shared Modal -->
+  <div class="modal-overlay hidden" id="modal-overlay">
+    <div class="modal" id="shared-modal">
+      <button class="modal-close" id="modal-close">&times;</button>
+      <div id="modal-content"></div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p>Crafted with care &mdash; every cup tells a story. &nbsp;|&nbsp; 120 teas &middot; 51 recipes</p>
+  </footer>
+
+  <!-- Data batches (loaded before app.js) -->
+  <script src="data/high-caffeine.js"></script>
+  <script src="data/high-caffeine-2.js"></script>
+  <script src="data/medium-caffeine.js"></script>
+  <script src="data/medium-caffeine-2.js"></script>
+  <script src="data/low-caffeine.js"></script>
+  <script src="data/low-caffeine-2.js"></script>
+  <script src="data/caffeine-free.js"></script>
+  <script src="data/caffeine-free-2.js"></script>
+  <script src="data/store.js"></script>
+  <script src="data/recipes-1.js"></script>
+  <script src="data/recipes-2.js"></script>
+  <script src="data/recipes-3.js"></script>
+  <!-- App logic -->
+  <script src="app.js"></script>
+</body>
+</html>
