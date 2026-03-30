@@ -33,7 +33,7 @@
 
   <header class="hero hero-quiz hidden" id="hero-quiz">
     <h1>Find My Perfect Tea</h1>
-    <p>Answer a few questions and we'll recommend the best tea for right now.</p>
+    <p>Choose the <strong>Basic Quiz</strong> for a quick 6-question match, or the <strong>In-Depth Quiz</strong> for a 12-question personalised recommendation.</p>
   </header>
 
   <header class="hero hero-store hidden" id="hero-store">
@@ -92,14 +92,34 @@
   <!-- QUIZ VIEW -->
   <main id="view-quiz" class="hidden">
     <div class="quiz-container">
-      <div class="quiz-progress">
+
+      <!-- Selection screen -->
+      <div class="quiz-selection" id="quiz-selection">
+        <h2 class="quiz-sel-heading">Choose your quiz</h2>
+        <div class="quiz-sel-cards">
+          <button class="quiz-sel-card" id="start-basic">
+            <span class="quiz-sel-icon">🍵</span>
+            <div class="quiz-sel-title">Basic Quiz</div>
+            <div class="quiz-sel-count">6 questions</div>
+            <p class="quiz-sel-desc">Quick and simple — get a great tea match in under two minutes.</p>
+          </button>
+          <button class="quiz-sel-card" id="start-indepth">
+            <span class="quiz-sel-icon">🔍</span>
+            <div class="quiz-sel-title">In-Depth Quiz</div>
+            <div class="quiz-sel-count">12 questions</div>
+            <p class="quiz-sel-desc">Detailed and personalised — covers flavor notes, region, wellness, experience level, and more.</p>
+          </button>
+        </div>
+      </div>
+
+      <div class="quiz-progress" style="display:none">
         <div class="progress-bar">
           <div class="progress-fill" id="progress-fill"></div>
         </div>
         <span class="progress-label" id="progress-label">Question 1 of 6</span>
       </div>
-      <div class="quiz-card" id="quiz-card"></div>
-      <div class="quiz-nav">
+      <div class="quiz-card hidden" id="quiz-card"></div>
+      <div class="quiz-nav" style="display:none">
         <button class="quiz-nav-btn" id="btn-prev" disabled>Back</button>
         <button class="quiz-nav-btn primary" id="btn-next">Next</button>
       </div>

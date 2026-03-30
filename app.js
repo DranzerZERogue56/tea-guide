@@ -72,7 +72,8 @@ const QUESTIONS = [
       { value: 'floral', icon: '🌸', label: 'Floral & Light',    sub: 'Delicate, fragrant, sweet' },
       { value: 'warm',   icon: '🌶️', label: 'Warming & Spicy',  sub: 'Ginger, spice, zesty' },
       { value: 'fresh',  icon: '🌱', label: 'Fresh & Grassy',    sub: 'Clean, vegetal, crisp' },
-      { value: 'cold',   icon: '🧊', label: 'Cool & Refreshing', sub: 'Fruity, minty, iced' }
+      { value: 'fruity', icon: '🍓', label: 'Fruity & Sweet',    sub: 'Berries, citrus, tropical' },
+      { value: 'cold',   icon: '🧊', label: 'Cool & Refreshing', sub: 'Minty, iced' }
     ]
   },
   {
@@ -92,6 +93,138 @@ const QUESTIONS = [
       { value: 'warm', icon: '♨️', label: 'Hot & Warming',  sub: 'Classic cup, steaming' },
       { value: 'cold', icon: '🧊', label: 'Iced or Cold',   sub: 'Refreshing and chilled' },
       { value: 'warm', icon: '🤷', label: 'Either is fine', sub: 'I\'ll drink whatever' }
+    ]
+  }
+];
+
+// ─── In-Depth Quiz Questions ──────────────────────────────────────────────────
+const QUESTIONS_INDEPTH = [
+  {
+    id: 'time', question: 'What time of day is it right now?',
+    hint: 'Your body clock shapes how it processes caffeine and adapts to certain teas.',
+    options: [
+      { value: 'morning',   icon: '🌅', label: 'Morning',    sub: 'Before noon' },
+      { value: 'afternoon', icon: '☀️', label: 'Afternoon',  sub: 'Noon – 5 PM' },
+      { value: 'evening',   icon: '🌇', label: 'Evening',    sub: '5 PM – 9 PM' },
+      { value: 'evening',   icon: '🌙', label: 'Late Night', sub: 'After 9 PM — boost caffeine-free' }
+    ]
+  },
+  {
+    id: 'goal', question: 'What\'s your primary goal right now?',
+    hint: 'Different teas serve very different purposes.',
+    options: [
+      { value: 'focus',    icon: '🎯', label: 'Focus & Productivity',  sub: 'I need to concentrate' },
+      { value: 'relax',    icon: '😌', label: 'Relax & Unwind',        sub: 'I want to de-stress' },
+      { value: 'energy',   icon: '⚡', label: 'Energy Boost',          sub: 'I need a pick-me-up' },
+      { value: 'wellness', icon: '🛡️', label: 'Wellness & Immunity',   sub: 'Support my health' },
+      { value: 'relax',    icon: '🛌', label: 'Prepare for Sleep',     sub: 'I\'m winding down' }
+    ]
+  },
+  {
+    id: 'caffeine', question: 'How do you feel about caffeine today?',
+    hint: 'Caffeine sensitivity varies day to day — trust how you feel right now.',
+    options: [
+      { value: 'caffeine',   icon: '☕',  label: 'Yes please',          sub: 'Give me the boost' },
+      { value: 'noCaffeine', icon: '🌿',  label: 'No thanks',           sub: 'I want caffeine-free' },
+      { value: 'low',        icon: '🍃',  label: 'Low caffeine only',   sub: 'Just a little' },
+      { value: 'caffeine',   icon: '🤷',  label: 'I don\'t mind',       sub: 'Whatever works' }
+    ]
+  },
+  {
+    id: 'temp', question: 'Hot or cold?',
+    hint: 'Some teas shine hot, others come alive iced.',
+    options: [
+      { value: 'warm', icon: '♨️', label: 'Hot & Steaming',  sub: 'Classic cup' },
+      { value: 'cold', icon: '🧊', label: 'Iced or Cold',    sub: 'Refreshing and chilled' },
+      { value: 'warm', icon: '🤷', label: 'Either is fine',  sub: 'I\'ll drink whatever' }
+    ]
+  },
+  {
+    id: 'feel', question: 'How are you feeling right now?',
+    hint: 'Your current state helps fine-tune our recommendation.',
+    options: [
+      { value: 'tired',    icon: '😴', label: 'Tired or sluggish',    sub: 'I need to wake up' },
+      { value: 'stressed', icon: '😰', label: 'Stressed or anxious',  sub: 'I need to calm down' },
+      { value: 'good',     icon: '😊', label: 'Good — just want tea', sub: 'No particular issue' },
+      { value: 'sick',     icon: '🤧', label: 'Under the weather',    sub: 'Sore throat, cold, etc.' },
+      { value: 'active',   icon: '🏃', label: 'Active or sporty',     sub: 'Just worked out / heading out' }
+    ]
+  },
+  {
+    id: 'flavor', question: 'What broad flavour profile appeals to you?',
+    hint: 'Think about your taste mood right now.',
+    options: [
+      { value: 'bold',   icon: '💪', label: 'Bold & Robust',     sub: 'Strong, rich, malty' },
+      { value: 'floral', icon: '🌸', label: 'Floral & Delicate', sub: 'Fragrant, sweet, light' },
+      { value: 'warm',   icon: '🌶️', label: 'Warming & Spiced', sub: 'Ginger, spice, zesty' },
+      { value: 'fresh',  icon: '🌱', label: 'Fresh & Grassy',    sub: 'Clean, vegetal, crisp' },
+      { value: 'fruity', icon: '🍓', label: 'Fruity & Sweet',    sub: 'Berries, citrus, tropical' },
+      { value: 'cold',   icon: '🧊', label: 'Cool & Minty',      sub: 'Refreshing, menthol, iced' }
+    ]
+  },
+  {
+    id: 'flavorNote', question: 'Which specific flavor notes appeal most to you?',
+    hint: 'This helps us match the exact taste character of the tea.',
+    options: [
+      { value: 'earthy',      icon: '🌍', label: 'Earthy & Smoky',     sub: 'Woody, mineral, umami' },
+      { value: 'floralnote',  icon: '🌺', label: 'Floral & Grassy',    sub: 'Jasmine, rose, vegetal' },
+      { value: 'fruitynote',  icon: '🍑', label: 'Fruity & Citrus',    sub: 'Berry, peach, lemon, tropical' },
+      { value: 'spiced',      icon: '🫙', label: 'Spiced & Warming',   sub: 'Cinnamon, ginger, cardamom' },
+      { value: 'nutty',       icon: '🌰', label: 'Nutty & Roasted',    sub: 'Toasty, caramel, malty' },
+      { value: 'any',         icon: '🤷', label: 'No preference',      sub: 'Surprise me' }
+    ]
+  },
+  {
+    id: 'strength', question: 'How strong do you like your tea?',
+    hint: 'Body and astringency vary hugely across teas.',
+    options: [
+      { value: 'strengthLight',  icon: '🌤️', label: 'Light & Delicate', sub: 'Gentle, barely-there' },
+      { value: 'strengthMedium', icon: '⚖️',  label: 'Medium-Bodied',   sub: 'Balanced and rounded' },
+      { value: 'strengthBold',   icon: '💥',  label: 'Full & Bold',      sub: 'Strong, robust, assertive' },
+      { value: 'strengthAny',    icon: '🤷',  label: 'No preference',   sub: 'I\'m open to anything' }
+    ]
+  },
+  {
+    id: 'region', question: 'Do you have a regional preference?',
+    hint: 'Each region has a completely distinct tea culture and flavour tradition.',
+    options: [
+      { value: 'regionJapan',  icon: '🗾', label: 'Japanese',              sub: 'Matcha, sencha, gyokuro' },
+      { value: 'regionChina',  icon: '🐉', label: 'Chinese',               sub: 'Oolongs, pu-erh, white tea' },
+      { value: 'regionIndia',  icon: '🏔️', label: 'Indian / Sri Lankan',  sub: 'Assam, Darjeeling, Ceylon' },
+      { value: 'regionHerbal', icon: '🌿', label: 'Herbal & Botanical',    sub: 'Chamomile, rooibos, hibiscus' },
+      { value: 'regionAny',    icon: '🌎', label: 'No preference',         sub: 'Open to anything' }
+    ]
+  },
+  {
+    id: 'health', question: 'Any specific wellness benefit you\'re looking for?',
+    hint: 'Some teas are clinically linked to specific health outcomes.',
+    options: [
+      { value: 'healthImmunity',  icon: '🛡️', label: 'Immunity & Antioxidants', sub: 'Boost my defences' },
+      { value: 'healthDigestion', icon: '🫃', label: 'Digestion & Gut Health',  sub: 'Settle my stomach' },
+      { value: 'healthClarity',   icon: '🧠', label: 'Mental Clarity & Focus',  sub: 'Sharpen my mind' },
+      { value: 'healthCalm',      icon: '🧘', label: 'Calm & Sleep Support',    sub: 'Help me relax or sleep' },
+      { value: 'healthAny',       icon: '🤷', label: 'No particular focus',     sub: 'General wellness' }
+    ]
+  },
+  {
+    id: 'milk', question: 'How do you like your tea served?',
+    hint: 'Some teas blossom with milk; others are best drunk pure.',
+    options: [
+      { value: 'milkPlain',  icon: '🫖', label: 'Plain — no milk',          sub: 'Just the pure tea' },
+      { value: 'milkMilky',  icon: '🥛', label: 'With milk or oat milk',    sub: 'Creamy and soft' },
+      { value: 'milkSweet',  icon: '🍯', label: 'With honey or sweetener',  sub: 'A touch of sweetness' },
+      { value: 'milkLatte',  icon: '☕', label: 'Latte-style',              sub: 'Steamed milk on top' },
+      { value: 'milkAny',    icon: '🤷', label: 'No preference',            sub: 'I\'m flexible' }
+    ]
+  },
+  {
+    id: 'experience', question: 'How adventurous are you with tea?',
+    hint: 'Helps us calibrate whether to suggest familiar classics or exciting discoveries.',
+    options: [
+      { value: 'expBeginner',     icon: '🌱', label: 'New to specialty tea', sub: 'Keep it familiar' },
+      { value: 'expIntermediate', icon: '🍃', label: 'Regular tea drinker',  sub: 'Open to exploring' },
+      { value: 'expAdvanced',     icon: '🫖', label: 'Tea enthusiast',       sub: 'Bring on the unusual' },
+      { value: 'expExpert',       icon: '🏆', label: 'Serious connoisseur',  sub: 'I want something rare' }
     ]
   }
 ];
@@ -329,6 +462,8 @@ let mixSearch    = '';
 let activeAdditive = null;
 let quizAnswers  = {};
 let quizStep     = 0;
+let currentQuizMode  = null;
+let activeQuestions  = QUESTIONS;
 let currentModalTeaId    = null;
 let currentModalRecipeId = null;
 let currentServingSize   = 1;
@@ -638,8 +773,18 @@ document.getElementById('shared-modal').addEventListener('click', e => {
 
 // ─── Quiz ─────────────────────────────────────────────────────────────────────
 function resetQuiz() {
-  quizAnswers = {}; quizStep = 0;
+  quizAnswers = {}; quizStep = 0; currentQuizMode = null; activeQuestions = QUESTIONS;
   document.getElementById('quiz-result').classList.add('hidden');
+  document.getElementById('quiz-card').classList.add('hidden');
+  document.querySelector('.quiz-progress').style.display = 'none';
+  document.querySelector('.quiz-nav').style.display = 'none';
+  document.getElementById('quiz-selection').classList.remove('hidden');
+}
+
+function startQuiz(mode) {
+  currentQuizMode = mode;
+  activeQuestions = mode === 'indepth' ? QUESTIONS_INDEPTH : QUESTIONS;
+  document.getElementById('quiz-selection').classList.add('hidden');
   document.getElementById('quiz-card').classList.remove('hidden');
   document.querySelector('.quiz-progress').style.display = 'flex';
   document.querySelector('.quiz-nav').style.display = 'flex';
@@ -647,7 +792,7 @@ function resetQuiz() {
 }
 
 function renderQuestion() {
-  const q = QUESTIONS[quizStep];
+  const q = activeQuestions[quizStep];
   const selected = quizAnswers[quizStep];
   document.getElementById('quiz-card').innerHTML = `
     <div class="quiz-question">${q.question}</div>
@@ -669,18 +814,19 @@ function renderQuestion() {
     });
   });
 
-  const fill = ((quizStep + 1) / QUESTIONS.length) * 100;
+  const fill = ((quizStep + 1) / activeQuestions.length) * 100;
   document.getElementById('progress-fill').style.width = fill + '%';
-  document.getElementById('progress-label').textContent = `Question ${quizStep + 1} of ${QUESTIONS.length}`;
+  document.getElementById('progress-label').textContent = `Question ${quizStep + 1} of ${activeQuestions.length}`;
   document.getElementById('btn-prev').disabled = quizStep === 0;
   document.getElementById('btn-next').disabled = selected === undefined;
-  document.getElementById('btn-next').textContent = quizStep === QUESTIONS.length - 1 ? 'Get My Tea' : 'Next';
+  document.getElementById('btn-next').textContent = quizStep === activeQuestions.length - 1 ? 'Get My Tea' : 'Next';
 }
 
 document.getElementById('btn-prev').addEventListener('click', () => { if (quizStep > 0) { quizStep--; renderQuestion(); } });
 document.getElementById('btn-next').addEventListener('click', () => {
   if (quizAnswers[quizStep] === undefined) return;
-  if (quizStep < QUESTIONS.length - 1) { quizStep++; renderQuestion(); }
+  if (quizStep < activeQuestions.length - 1) { quizStep++; renderQuestion(); }
+  else if (currentQuizMode === 'indepth') showIndepthResult();
   else showResult();
 });
 
@@ -695,6 +841,10 @@ function showResult() {
       if (val === 'tired')    { signals.energy = (signals.energy || 0) + 2; signals.caffeine = (signals.caffeine || 0) + 1; }
       if (val === 'stressed') { signals.relax = (signals.relax || 0) + 2; signals.noCaffeine = (signals.noCaffeine || 0) + 1; }
       if (val === 'sick')     { signals.warm = (signals.warm || 0) + 1; signals.noCaffeine = (signals.noCaffeine || 0) + 1; }
+    }
+    if (q.id === 'flavor' && val === 'fruity') {
+      signals.cold = (signals.cold || 0) + 1;
+      signals.relax = (signals.relax || 0) + 1;
     }
   });
 
@@ -759,10 +909,193 @@ function buildReason(tea, signals) {
   else if (signals.caffeine && (tea.caffeine === 'high' || tea.caffeine === 'medium')) parts.push('delivers the caffeine kick you need');
   if (signals.warm && tea.quizScore.warm >= 2) parts.push('wonderfully warming');
   if (signals.cold && tea.quizScore.cold >= 2) parts.push('brilliant served cold or iced');
+  if (signals.fruity && tea.flavor.some(f => ['fruity','citrus','citrusy','berry','tropical','peachy','bright','tangy'].some(k => f.toLowerCase().includes(k)))) parts.push('naturally bright and fruity');
   if (signals.sick) parts.push('known for its immune-boosting properties');
   if (!parts.length) return `${tea.name} is a wonderful all-around tea — ${tea.desc.split('.')[0].toLowerCase()}.`;
   let s = cap(parts[0]);
   if (parts.length > 2) s += ', ' + parts.slice(1, -1).join(', ') + ', and ' + parts[parts.length - 1];
+  else if (parts.length === 2) s += ' and ' + parts[1];
+  return s + '. ' + tea.desc.split('.')[0] + '.';
+}
+
+// ─── In-Depth Quiz Result ─────────────────────────────────────────────────────
+const INDEPTH_FLAVOR_KEYWORDS = {
+  earthy:     ['earthy','smoky','woody','umami','mineral','peaty','roasted'],
+  floralnote: ['floral','grassy','vegetal','sweet','delicate','jasmine','rose'],
+  fruitynote: ['fruity','citrus','citrusy','berry','tropical','peachy','bright','tangy'],
+  spiced:     ['spicy','warming','spice','ginger','cinnamon','cardamom','pepper'],
+  nutty:      ['nutty','roasted','toasty','caramel','malty','biscuity']
+};
+
+const INDEPTH_REGION_KEYWORDS = {
+  regionJapan: ['japan'],
+  regionChina: ['china','fujian','yunnan','sichuan','wuyi','zhejiang','taiwan'],
+  regionIndia: ['india','assam','darjeeling','nilgiri','ceylon','sri lanka']
+};
+
+const INDEPTH_HEALTH_TAGS = {
+  healthImmunity:  ['antioxidant','immune','vitamin','elderflower','hibiscus','rosehip'],
+  healthDigestion: ['digestion','digestive','gut','peppermint','ginger','dandelion'],
+  healthClarity:   ['focus','energy','matcha','yerba','sencha'],
+  healthCalm:      ['relax','sleep','calming','chamomile','lavender','valerian','passionflower']
+};
+
+function showIndepthResult() {
+  const answers = {};
+  QUESTIONS_INDEPTH.forEach((q, qi) => {
+    const idx = quizAnswers[qi];
+    if (idx !== undefined) answers[q.id] = q.options[idx].value;
+  });
+
+  const signals = {};
+  QUESTIONS_INDEPTH.forEach((q, qi) => {
+    const idx = quizAnswers[qi];
+    if (idx === undefined) return;
+    const val = q.options[idx].value;
+    signals[val] = (signals[val] || 0) + 2;
+    if (q.id === 'feel') {
+      if (val === 'tired')    { signals.energy=(signals.energy||0)+2; signals.caffeine=(signals.caffeine||0)+1; }
+      if (val === 'stressed') { signals.relax=(signals.relax||0)+2; signals.noCaffeine=(signals.noCaffeine||0)+1; }
+      if (val === 'sick')     { signals.warm=(signals.warm||0)+1; signals.noCaffeine=(signals.noCaffeine||0)+1; }
+      if (val === 'active')   { signals.energy=(signals.energy||0)+2; signals.caffeine=(signals.caffeine||0)+1; }
+    }
+    if (q.id === 'flavor' && val === 'fruity') { signals.cold=(signals.cold||0)+1; }
+    if (q.id === 'health') {
+      if (val === 'healthClarity') { signals.focus=(signals.focus||0)+2; }
+      if (val === 'healthCalm')    { signals.relax=(signals.relax||0)+2; signals.noCaffeine=(signals.noCaffeine||0)+1; }
+    }
+    if (q.id === 'caffeine' && val === 'low') { signals.noCaffeine=(signals.noCaffeine||0)+1; }
+  });
+
+  const flavorNoteVal = answers.flavorNote;
+  const strengthVal   = answers.strength;
+  const healthVal     = answers.health;
+  const milkVal       = answers.milk;
+  const expVal        = answers.experience;
+
+  const scored = TEAS.map(tea => {
+    let score = 0;
+
+    // Standard quizScore signals
+    Object.entries(signals).forEach(([key, weight]) => {
+      if (tea.quizScore[key] !== undefined) score += tea.quizScore[key] * weight;
+    });
+
+    // Flavor note matching (high weight)
+    if (flavorNoteVal && flavorNoteVal !== 'any') {
+      const keywords = INDEPTH_FLAVOR_KEYWORDS[flavorNoteVal] || [];
+      const match = tea.flavor.some(f => keywords.some(k => f.toLowerCase().includes(k)));
+      score += match ? 6 : -3;
+    }
+
+    // Region preference
+    const regionVal = answers.region;
+    if (regionVal && regionVal !== 'regionAny') {
+      if (regionVal === 'regionHerbal') {
+        score += tea.caffeine === 'none' ? 5 : -2;
+      } else {
+        const keywords = INDEPTH_REGION_KEYWORDS[regionVal] || [];
+        const originLower = tea.origin.toLowerCase();
+        const match = keywords.some(k => originLower.includes(k));
+        score += match ? 5 : -2;
+      }
+    }
+
+    // Strength preference
+    if (strengthVal === 'strengthLight')  score += (tea.caffeine === 'none' || tea.caffeine === 'low') ? 3 : -1;
+    if (strengthVal === 'strengthMedium') score += tea.caffeine === 'medium' ? 3 : 0;
+    if (strengthVal === 'strengthBold')   score += tea.caffeine === 'high' ? 3 : -1;
+
+    // Health tag matching
+    if (healthVal && healthVal !== 'healthAny') {
+      const keywords = INDEPTH_HEALTH_TAGS[healthVal] || [];
+      const match = keywords.some(k => tea.id.includes(k) || tea.tags.some(t => t.includes(k)));
+      score += match ? 4 : 0;
+    }
+
+    // Milk / serving preference
+    if (milkVal === 'milkMilky' || milkVal === 'milkLatte') {
+      if (tea.tags.includes('milk tea') || ['blacktea','assam','ceylon','rooibos','matcha'].includes(tea.id)) score += 3;
+    }
+    if (milkVal === 'milkPlain' && (tea.caffeine === 'none' || tea.caffeine === 'low')) score += 1;
+
+    // Experience / adventurousness
+    const rareTags = ['aged','fermented','premium','rare','unique','oxidized','smoked'];
+    const isRare = tea.tags.some(t => rareTags.some(k => t.toLowerCase().includes(k)));
+    const classicIds = ['blacktea','greentea','chamomile','peppermint','matcha','rooibos'];
+    if (expVal === 'expBeginner') {
+      if (isRare) score -= 3;
+      if (classicIds.includes(tea.id)) score += 2;
+    } else if (expVal === 'expAdvanced' || expVal === 'expExpert') {
+      if (isRare) score += 3;
+      if (classicIds.includes(tea.id)) score -= 1;
+    }
+
+    return { tea, score };
+  }).sort((a, b) => b.score - a.score);
+
+  const winner  = scored[0].tea;
+  const runners = scored.slice(1, 4).map(s => s.tea);
+
+  document.getElementById('quiz-card').classList.add('hidden');
+  document.querySelector('.quiz-progress').style.display = 'none';
+  document.querySelector('.quiz-nav').style.display = 'none';
+
+  const resultEl = document.getElementById('quiz-result');
+  resultEl.innerHTML = `
+    <span class="result-emoji">${winner.emoji}</span>
+    <div class="result-label">Based on your detailed profile, your ideal tea is</div>
+    <div class="result-name">${winner.name}</div>
+    <p class="result-reason">${buildIndepthReason(winner, answers, signals)}</p>
+    <div class="result-badges">
+      <span class="tag ${caffeineClass(winner.caffeine)}">${caffeineLabel(winner.caffeine)}</span>
+      ${winner.bestTimes.map(t => `<span class="tag time">${cap(t)}</span>`).join('')}
+      ${winner.tags.slice(0,2).map(t => `<span class="tag">${cap(t)}</span>`).join('')}
+    </div>
+    <div class="result-actions">
+      <button class="btn btn-primary" id="btn-view-tea">View Full Details</button>
+      <button class="btn btn-secondary" id="btn-retake">Retake Quiz</button>
+    </div>
+    <div class="runner-ups">
+      <div class="runner-title">Also closely matched</div>
+      <div class="runner-list">
+        ${runners.map(t => `
+          <div class="runner-item" style="cursor:pointer" data-runner-id="${t.id}">
+            <span class="runner-emoji">${t.emoji}</span>
+            <div><div class="runner-name">${t.name}</div><div class="runner-why">${t.origin} &middot; ${caffeineLabel(t.caffeine)}</div></div>
+          </div>`).join('')}
+      </div>
+    </div>`;
+  resultEl.classList.remove('hidden');
+
+  document.getElementById('btn-view-tea').addEventListener('click', () => { switchView('catalog'); setTimeout(() => openTeaModal(winner.id), 80); });
+  document.getElementById('btn-retake').addEventListener('click', resetQuiz);
+  resultEl.querySelectorAll('[data-runner-id]').forEach(el => {
+    el.addEventListener('click', () => { switchView('catalog'); setTimeout(() => openTeaModal(el.dataset.runnerId), 80); });
+  });
+}
+
+function buildIndepthReason(tea, answers, signals) {
+  const parts = [];
+  if (answers.time === 'morning' && tea.bestTimes.includes('morning')) parts.push('an ideal morning tea');
+  else if (answers.time === 'afternoon' && tea.bestTimes.includes('afternoon')) parts.push('perfect for the afternoon');
+  else if (answers.time === 'evening' && (tea.bestTimes.includes('evening') || tea.caffeine === 'none')) parts.push('ideal for winding down');
+  if (answers.goal === 'focus' && tea.quizScore.focus >= 2) parts.push('sharpens focus and mental clarity');
+  if (answers.goal === 'relax' && tea.quizScore.relax >= 2) parts.push('deeply calming and soothing');
+  if (answers.goal === 'energy' && tea.quizScore.energy >= 2) parts.push('provides a sustained natural energy lift');
+  if (answers.caffeine === 'noCaffeine' && tea.caffeine === 'none') parts.push('completely caffeine-free');
+  else if (answers.caffeine === 'low' && (tea.caffeine === 'low' || tea.caffeine === 'none')) parts.push('gently low in caffeine');
+  else if ((answers.caffeine === 'caffeine') && (tea.caffeine === 'high' || tea.caffeine === 'medium')) parts.push('delivers the caffeine kick you wanted');
+  if (answers.temp === 'cold' && tea.quizScore.cold >= 2) parts.push('excellent served iced');
+  if (answers.flavorNote && answers.flavorNote !== 'any') {
+    const noteDescs = { earthy:'earthy and grounding', floralnote:'beautifully floral', fruitynote:'bright and fruity', spiced:'warmly spiced', nutty:'rich and roasted' };
+    if (noteDescs[answers.flavorNote]) parts.push(noteDescs[answers.flavorNote]);
+  }
+  const regionNames = { regionJapan:'a celebrated Japanese tea', regionChina:'a classic Chinese tea', regionIndia:'a prized South Asian tea', regionHerbal:'a pure herbal blend' };
+  if (answers.region && regionNames[answers.region]) parts.push(regionNames[answers.region]);
+  if (!parts.length) return `${tea.name} is a wonderful all-around tea — ${tea.desc.split('.')[0].toLowerCase()}.`;
+  let s = cap(parts[0]);
+  if (parts.length > 2) s += ', ' + parts.slice(1,-1).join(', ') + ', and ' + parts[parts.length-1];
   else if (parts.length === 2) s += ' and ' + parts[1];
   return s + '. ' + tea.desc.split('.')[0] + '.';
 }
@@ -977,6 +1310,9 @@ document.getElementById('store-sort').addEventListener('change', e => {
   storeSort = e.target.value;
   renderStore();
 });
+
+document.getElementById('start-basic').addEventListener('click', () => startQuiz('basic'));
+document.getElementById('start-indepth').addEventListener('click', () => startQuiz('indepth'));
 
 // ─── Init ─────────────────────────────────────────────────────────────────────
 renderCatalog();
