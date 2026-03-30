@@ -1088,6 +1088,18 @@ body {
   margin-left: auto;
 }
 
+/* ─── Safe-area (iPhone notch / home indicator) ─────────────── */
+.navbar {
+  padding-left: max(2rem, env(safe-area-inset-left));
+  padding-right: max(2rem, env(safe-area-inset-right));
+}
+.modal {
+  padding-bottom: max(2rem, env(safe-area-inset-bottom));
+}
+.footer {
+  padding-bottom: max(1.5rem, env(safe-area-inset-bottom));
+}
+
 /* ─── Utility ───────────────────────────────────────────────── */
 .hidden { display: none !important; }
 
@@ -1101,16 +1113,156 @@ body {
   border-top: 1px solid var(--border);
 }
 
-/* ─── Responsive ────────────────────────────────────────────── */
+/* ─── Responsive — tablet ────────────────────────────────────── */
+@media (max-width: 900px) {
+  .tea-grid  { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+  .mix-grid  { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+  .store-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
+}
+
+/* ─── Responsive — mobile ────────────────────────────────────── */
 @media (max-width: 640px) {
-  .navbar { padding: 0 1rem; }
-  .nav-brand { font-size: 1rem; }
-  .nav-btn { padding: 0.35rem 0.7rem; font-size: 0.8rem; }
-  .hero { padding: 2rem 1rem 1.5rem; }
-  .quiz-card { padding: 1.4rem; }
-  .modal { padding: 1.4rem; }
-  .brew-grid { grid-template-columns: repeat(2, 1fr); }
+
+  /* ── Navbar: brand row + horizontally scrollable tab row ── */
+  .navbar {
+    height: auto;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0.65rem 1rem 0;
+    gap: 0;
+  }
+  .nav-brand {
+    font-size: 1.05rem;
+    padding-bottom: 0.5rem;
+  }
+  .nav-links {
+    display: flex;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    gap: 0.35rem;
+    padding: 0 0 0.65rem;
+    scrollbar-width: none;
+  }
+  .nav-links::-webkit-scrollbar { display: none; }
+  .nav-btn {
+    padding: 0.42rem 0.9rem;
+    font-size: 0.82rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* ── Hero ── */
+  .hero { padding: 1.75rem 1rem 1.25rem; }
+  .hero p { font-size: 0.9rem; }
+
+  /* ── Controls & search ── */
+  .controls {
+    margin: 0.75rem 0.75rem 0;
+    padding: 0.9rem 0.9rem;
+    border-radius: 12px;
+  }
+  .search-input {
+    max-width: 100%;
+    font-size: 1rem; /* prevents iOS auto-zoom on focus */
+  }
+  .filter-btn, .mix-filter-btn, .store-filter-btn, .store-price-btn {
+    padding: 0.45rem 0.85rem;
+    font-size: 0.78rem;
+  }
+
+  /* ── Tea grid ── */
+  .tea-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.65rem;
+    padding: 0 0.75rem;
+    margin: 0.75rem auto 2rem;
+  }
+  .tea-card { padding: 1rem; }
+  .tea-card-emoji { font-size: 2rem; margin-bottom: 0.4rem; }
+  .tea-card-name  { font-size: 1rem; }
+  .tea-card-desc  { -webkit-line-clamp: 2; font-size: 0.82rem; }
+
+  /* ── Mixology ── */
+  .mix-grid {
+    grid-template-columns: 1fr;
+    gap: 0.65rem;
+    padding: 0 0.75rem;
+    margin: 0.75rem auto 2rem;
+  }
+  .additive-strip { padding: 0 0.75rem; }
+
+  /* ── Modal → bottom sheet ── */
+  .modal-overlay {
+    padding: 0;
+    align-items: flex-end;
+  }
+  .modal {
+    border-radius: 24px 24px 0 0;
+    max-height: 92vh;
+    padding: 1.5rem 1.2rem 2rem;
+    width: 100%;
+    max-width: 100%;
+  }
+  .modal-emoji  { font-size: 3rem; }
+  .modal-name   { font-size: 1.4rem; }
+  .modal-stats  { grid-template-columns: 1fr 1fr; }
+  .brew-grid    { grid-template-columns: repeat(3, 1fr); }
   .recipe-modal-header { flex-direction: column; }
-  .mix-grid { grid-template-columns: 1fr; }
-  .store-grid { grid-template-columns: 1fr; padding: 1rem; }
+
+  /* ── Quiz ── */
+  .quiz-container { margin: 1.25rem auto; padding: 0 0.75rem 2rem; }
+  .quiz-sel-cards { grid-template-columns: 1fr; }
+  .quiz-card {
+    padding: 1.25rem;
+    min-height: unset;
+    border-radius: 16px;
+  }
+  .quiz-question { font-size: 1.1rem; }
+  .quiz-hint     { margin-bottom: 1rem; }
+  .quiz-option {
+    padding: 0.9rem 0.9rem;
+    border-radius: 10px;
+  }
+  .option-icon  { font-size: 1.3rem; }
+  .option-label { font-size: 0.9rem; }
+  .quiz-nav-btn { padding: 0.6rem 1.2rem; font-size: 0.88rem; }
+
+  /* ── Quiz result ── */
+  .quiz-result { padding: 1.5rem 1.1rem; }
+  .result-emoji  { font-size: 3.5rem; }
+  .result-name   { font-size: 1.55rem; }
+  .result-actions { flex-direction: column; align-items: stretch; }
+  .btn { width: 100%; text-align: center; }
+
+  /* ── Wellness ── */
+  .wellness-container { padding: 1rem 0.75rem 3rem; }
+  .ailment-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.6rem;
+  }
+  .ailment-card { padding: 0.9rem 0.6rem; }
+  .ailment-emoji { font-size: 1.9rem; }
+  .wellness-result-header { flex-wrap: wrap; }
+  .wellness-result-title  { font-size: 1.25rem; }
+  .remedy-card  { padding: 0.9rem 1rem; }
+
+  /* ── Store ── */
+  .store-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.65rem;
+    padding: 0.75rem;
+  }
+  .store-controls { margin: 0.75rem; }
+  .store-sort-row { flex-wrap: wrap; gap: 0.4rem; }
+  .store-sort-select { font-size: 1rem; } /* prevent iOS zoom */
+  .store-count { margin-left: 0; }
+
+  /* ── Footer ── */
+  .footer { font-size: 0.78rem; padding: 1rem; }
+}
+
+/* ─── Very small phones (≤ 390px) ───────────────────────────── */
+@media (max-width: 390px) {
+  .tea-grid   { grid-template-columns: 1fr; }
+  .store-grid { grid-template-columns: 1fr; }
 }
