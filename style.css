@@ -15,7 +15,39 @@
   --shadow:    0 4px 20px rgba(0,0,0,0.08);
   --radius:    14px;
   --transition: 0.22s ease;
+  --nav-bg:    rgba(253,248,242,0.92);
+  --controls-bg: rgba(255,255,255,0.75);
 }
+
+/* ─── Dark theme ───────────────────────────────────────────── */
+[data-theme="dark"] {
+  --bg:        #15110d;
+  --surface:   #211b15;
+  --border:    #3a3127;
+  --text:      #f0e7db;
+  --muted:     #a89684;
+  --accent:    #d9a066;
+  --accent2:   #e09a4f;
+  --green:     #5fb56b;
+  --blue:      #7da0d8;
+  --tag-bg:    #2c2419;
+  --shadow:    0 4px 20px rgba(0,0,0,0.45);
+  --nav-bg:    rgba(21,17,13,0.92);
+  --controls-bg: rgba(255,255,255,0.04);
+}
+
+/* Hero gradients tuned for dark backgrounds */
+[data-theme="dark"] .hero       { background: linear-gradient(135deg, #221a12 0%, #15110d 60%, #14201a 100%); }
+[data-theme="dark"] .hero-mix   { background: linear-gradient(135deg, #221a12 0%, #15110d 50%, #141a26 100%); }
+[data-theme="dark"] .hero-quiz  { background: linear-gradient(135deg, #15110d 0%, #221a12 100%); }
+[data-theme="dark"] .hero-store { background: linear-gradient(135deg, #14201a 0%, #15110d 50%, #161f1b 100%); }
+[data-theme="dark"] .hero-wellness { background: linear-gradient(135deg, #221a12 0%, #15110d 50%, #1c1a26 100%); }
+
+/* Light, hardcoded accent surfaces → dark equivalents */
+[data-theme="dark"] .recipe-tip        { background: #2a2014; border-color: #5a4326; }
+[data-theme="dark"] .wellness-disclaimer { background: #2a2410; border-color: #5a4d20; }
+[data-theme="dark"] .quiz-option:hover { background: #2a2014; }
+[data-theme="dark"] .quiz-option.selected { background: #332817; }
 
 html { scroll-behavior: smooth; }
 
@@ -38,7 +70,7 @@ body {
   justify-content: space-between;
   padding: 0 2rem;
   height: 64px;
-  background: rgba(253,248,242,0.92);
+  background: var(--nav-bg);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--border);
 }
@@ -69,6 +101,30 @@ body {
 }
 .nav-btn:hover { color: var(--accent); border-color: var(--border); }
 .nav-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+/* ─── Theme toggle ─────────────────────────────────────────── */
+.theme-toggle {
+  margin-left: 0.5rem;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--border);
+  border-radius: 999px;
+  background: none;
+  color: var(--accent);
+  font-size: 1.15rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: var(--transition);
+}
+.theme-toggle:hover { border-color: var(--accent2); color: var(--accent2); }
+.theme-toggle .icon-sun  { display: none; }
+.theme-toggle .icon-moon { display: inline; }
+[data-theme="dark"] .theme-toggle .icon-sun  { display: inline; }
+[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
 
 /* ─── Hero ─────────────────────────────────────────────────── */
 .hero {
@@ -113,7 +169,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 0.9rem;
-  background: rgba(255,255,255,0.75);
+  background: var(--controls-bg);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   backdrop-filter: blur(6px);
@@ -938,7 +994,7 @@ body {
   letter-spacing: 0.05em;
   padding: 0.18rem 0.55rem;
   border-radius: 99px;
-  background: rgba(253,248,242,0.92);
+  background: var(--nav-bg);
   color: var(--accent);
   border: 1px solid var(--border);
   backdrop-filter: blur(4px);
