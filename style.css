@@ -306,7 +306,7 @@ body {
   display: inline-block;
   padding: 0.2rem 0.6rem;
   border-radius: 999px;
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
   font-weight: 600;
   background: var(--tag-bg);
   color: var(--accent);
@@ -390,7 +390,7 @@ body {
   gap: 0.2rem;
   padding: 0.18rem 0.55rem;
   border-radius: 999px;
-  font-size: 0.74rem;
+  font-size: 0.78rem;
   font-weight: 700;
 }
 
@@ -413,7 +413,7 @@ body {
   gap: 0.15rem;
   padding: 0.18rem 0.55rem;
   border-radius: 999px;
-  font-size: 0.74rem;
+  font-size: 0.78rem;
   font-weight: 600;
   background: var(--tag-bg);
   color: var(--accent);
@@ -496,7 +496,7 @@ body {
   align-items: flex-start;
 }
 .tip-label {
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.07em;
@@ -555,7 +555,7 @@ body {
 .modal-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 0.8rem; margin-bottom: 1.5rem; }
 
 .stat-box { background: var(--tag-bg); border-radius: 12px; padding: 0.9rem 1rem; border: 1px solid var(--border); }
-.stat-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin-bottom: 0.3rem; }
+.stat-label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin-bottom: 0.3rem; }
 .stat-value { font-size: 0.95rem; font-weight: 600; color: var(--accent); }
 
 .modal-section-title {
@@ -573,7 +573,7 @@ body {
 
 .brew-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6rem; }
 .brew-item { text-align: center; background: var(--tag-bg); border-radius: 10px; padding: 0.6rem 0.4rem; border: 1px solid var(--border); }
-.brew-item .label { font-size: 0.7rem; color: var(--muted); font-weight: 600; text-transform: uppercase; }
+.brew-item .label { font-size: 0.75rem; color: var(--muted); font-weight: 600; text-transform: uppercase; }
 .brew-item .value { font-size: 0.9rem; font-weight: 700; color: var(--accent); margin-top: 0.2rem; }
 
 /* ─── Serving Size Selector ─────────────────────────────── */
@@ -898,7 +898,7 @@ body {
 }
 
 .remedy-view-hint {
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   font-weight: 600;
   color: var(--accent2);
   opacity: 0;
@@ -1008,7 +1008,7 @@ body {
   position: absolute;
   bottom: 0.5rem;
   left: 0.5rem;
-  font-size: 0.68rem;
+  font-size: 0.75rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -1360,4 +1360,30 @@ body {
     padding-left: max(1.5rem, env(safe-area-inset-left));
     padding-right: max(1.5rem, env(safe-area-inset-right));
   }
+}
+
+/* ─── Touch sizes and text on phones (portrait and landscape) ─ */
+@media (max-width: 640px), (max-height: 500px) {
+  .nav-btn { min-height: 44px; }
+  .theme-toggle { width: 44px; height: 44px; }
+  .search-input { min-height: 48px; font-size: 1rem; }
+  .filter-btn, .mix-filter-btn, .store-filter-btn, .store-price-btn, .additive-chip {
+    min-height: 44px;
+    font-size: 0.875rem;
+  }
+  .filter-buttons, .additive-chips { gap: 0.5rem; }
+  .serving-btn { width: 44px; height: 44px; }
+  .serving-btns { gap: 0.5rem; }
+  .quiz-nav-btn { min-height: 52px; font-size: 1rem; padding: 0.6rem 1.5rem; }
+  .btn { min-height: 52px; font-size: 1rem; }
+  .wellness-back-btn { min-height: 44px; }
+  .store-sort-select { min-height: 44px; }
+  .store-buy-btn, .store-detail-btn { min-height: 44px; display: inline-flex; align-items: center; justify-content: center; }
+  .option-label { font-size: 1.0625rem; }
+  .option-sub { font-size: 0.875rem; }
+  .modal-desc, .benefit-list li, .step-list li, .ingredient-list li { font-size: 1rem; }
+  .tea-card-desc { font-size: 0.875rem; }
+}
+@media (max-width: 390px) {
+  .tea-card-desc { font-size: 0.9375rem; }
 }
