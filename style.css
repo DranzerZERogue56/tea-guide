@@ -1387,3 +1387,23 @@ body {
 @media (max-width: 390px) {
   .tea-card-desc { font-size: 0.9375rem; }
 }
+
+/* ─── Chip rows scroll sideways on phones instead of wrapping ─ */
+@media (max-width: 640px), (max-height: 500px) {
+  .filter-buttons, .additive-chips {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    /* room for the active chip's shadow, and a soft fade that hints at more chips */
+    padding: 6px 28px 10px 6px;
+    margin: -6px -6px -10px -6px;
+    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent);
+            mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent);
+  }
+  .filter-buttons::-webkit-scrollbar, .additive-chips::-webkit-scrollbar { display: none; }
+  .filter-btn, .mix-filter-btn, .store-filter-btn, .store-price-btn, .additive-chip,
+  .store-filter-label { flex-shrink: 0; }
+  .controls { gap: 0.6rem; }
+}
