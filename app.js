@@ -1324,6 +1324,9 @@ document.getElementById('start-basic').addEventListener('click', () => startQuiz
 document.getElementById('start-indepth').addEventListener('click', () => startQuiz('indepth'));
 
 // ─── Init ─────────────────────────────────────────────────────────────────────
+// Counts in the page text come from the data, so they stay right when teas or recipes change
+document.querySelectorAll('[data-count="teas"]').forEach(el => { el.textContent = TEAS.length; });
+document.querySelectorAll('[data-count="recipes"]').forEach(el => { el.textContent = RECIPES.length; });
 renderCatalog();
 renderAdditives();
 renderMixology();
