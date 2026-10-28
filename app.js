@@ -1242,7 +1242,7 @@ function renderStore() {
         </div>
         <div class="store-body">
           <div class="store-name">${tea.name}</div>
-          <div class="store-origin">${tea.origin}</div>
+          <div class="store-meta"><span class="store-origin">${tea.origin}</span><span class="store-caf-inline ${cafClass}">${cafLabel}</span></div>
           <div class="store-unit">${data.unit}</div>
           <div class="store-price-row">
             <span class="store-price">$${data.price.toFixed(2)}</span>
@@ -1264,7 +1264,7 @@ function renderStore() {
         </div>
         <div class="store-body">
           <div class="store-name">${tea.name}</div>
-          <div class="store-origin">${tea.origin}</div>
+          <div class="store-meta"><span class="store-origin">${tea.origin}</span><span class="store-caf-inline ${cafClass}">${cafLabel}</span></div>
           <div class="store-unit store-unit-pending">Price data coming soon</div>
           <div class="store-price-row">
             <span class="store-price store-price-pending">—</span>
