@@ -4,6 +4,15 @@
 const TEAS    = [...TEAS_HIGH, ...TEAS_HIGH2, ...TEAS_MEDIUM, ...TEAS_MEDIUM2, ...TEAS_LOW, ...TEAS_LOW2, ...TEAS_FREE, ...TEAS_FREE2];
 const RECIPES = [...RECIPES_1, ...RECIPES_2, ...RECIPES_3];
 
+// Some emoji fields are plain letters, or country flags (Windows shows flags as letters like "TR").
+// Use a neutral cup for those so every card shows a picture.
+function safeEmoji(e) {
+  const ok = typeof e === 'string' && /\p{Extended_Pictographic}/u.test(e) && !/\p{Regional_Indicator}/u.test(e);
+  return ok ? e : '🍵';
+}
+TEAS.forEach(t => { t.emoji = safeEmoji(t.emoji); });
+RECIPES.forEach(r => { r.emoji = safeEmoji(r.emoji); });
+
 // ─── Additives ────────────────────────────────────────────────────────────────
 const ADDITIVES = [
   { id: 'honey',        name: 'Honey',           emoji: '🍯', desc: 'Natural sweetener with antimicrobial properties. Adds floral sweetness without overpowering the tea.' },
@@ -756,6 +765,10 @@ document.getElementById('modal-overlay').addEventListener('click', e => {
   if (e.target === document.getElementById('modal-overlay')) closeModal();
 });
 
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeModal();
+});
+
 document.getElementById('shared-modal').addEventListener('click', e => {
   const btn = e.target.closest('.serving-btn');
   if (!btn) return;
@@ -879,8 +892,7 @@ function showResult() {
     <p class="result-reason">${buildReason(winner, signals)}</p>
     <div class="result-badges">
       <span class="tag ${caffeineClass(winner.caffeine)}">${caffeineLabel(winner.caffeine)}</span>
-      ${winner.bestTimes.map(t => `<span class="tag time">${cap(t)}</span>`).join('')}
-      ${winner.tags.slice(0,2).map(t => `<span class="tag">${cap(t)}</span>`).join('')}
+      ${resultTagsHTML(winner)}
     </div>
     <div class="result-actions">
       <button class="btn btn-primary" id="btn-view-tea">View Full Details</button>
@@ -903,6 +915,15 @@ function showResult() {
   resultEl.querySelectorAll('[data-runner-id]').forEach(el => {
     el.addEventListener('click', () => { switchView('catalog'); setTimeout(() => openTeaModal(el.dataset.runnerId), 80); });
   });
+}
+
+// Time tags first, then up to two topic tags. A label that is already shown is not repeated.
+function resultTagsHTML(tea) {
+  const seen = new Set();
+  const times = tea.bestTimes.filter(t => !seen.has(t.toLowerCase()) && seen.add(t.toLowerCase()));
+  const topics = tea.tags.filter(t => !seen.has(t.toLowerCase()) && seen.add(t.toLowerCase())).slice(0, 2);
+  return times.map(t => `<span class="tag time">${cap(t)}</span>`).join('')
+       + topics.map(t => `<span class="tag">${cap(t)}</span>`).join('');
 }
 
 function buildReason(tea, signals) {
@@ -1055,11 +1076,10 @@ function showIndepthResult() {
     <span class="result-emoji">${winner.emoji}</span>
     <div class="result-label">Based on your detailed profile, your ideal tea is</div>
     <div class="result-name">${winner.name}</div>
-    <p class="result-reason">${buildIndepthReason(winner, answers, signals)}</p>
+    <p class="result-reason">${buildIndepthReason(winner, answers)}</p>
     <div class="result-badges">
       <span class="tag ${caffeineClass(winner.caffeine)}">${caffeineLabel(winner.caffeine)}</span>
-      ${winner.bestTimes.map(t => `<span class="tag time">${cap(t)}</span>`).join('')}
-      ${winner.tags.slice(0,2).map(t => `<span class="tag">${cap(t)}</span>`).join('')}
+      ${resultTagsHTML(winner)}
     </div>
     <div class="result-actions">
       <button class="btn btn-primary" id="btn-view-tea">View Full Details</button>
@@ -1084,7 +1104,7 @@ function showIndepthResult() {
   });
 }
 
-function buildIndepthReason(tea, answers, signals) {
+function buildIndepthReason(tea, answers) {
   const parts = [];
   if (answers.time === 'morning' && tea.bestTimes.includes('morning')) parts.push('an ideal morning tea');
   else if (answers.time === 'afternoon' && tea.bestTimes.includes('afternoon')) parts.push('perfect for the afternoon');
@@ -1238,6 +1258,11 @@ function renderStore() {
 
   document.getElementById('store-count').textContent = `${items.length} tea${items.length !== 1 ? 's' : ''}`;
 
+  if (!items.length) {
+    grid.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:var(--muted);padding:3rem 0">No teas match. Try a different search or filter.</p>';
+    return;
+  }
+
   grid.innerHTML = items.map(({ tea, data }) => {
     const cafClass = tea.caffeine === 'high' ? 'badge-high' : tea.caffeine === 'medium' ? 'badge-med' : tea.caffeine === 'low' ? 'badge-low' : 'badge-free';
     const cafLabel = tea.caffeine === 'high' ? 'High Caffeine' : tea.caffeine === 'medium' ? 'Medium' : tea.caffeine === 'low' ? 'Low' : 'Caffeine-Free';
@@ -1324,6 +1349,9 @@ document.getElementById('start-basic').addEventListener('click', () => startQuiz
 document.getElementById('start-indepth').addEventListener('click', () => startQuiz('indepth'));
 
 // ─── Init ─────────────────────────────────────────────────────────────────────
+// Counts in the page text come from the data, so they stay right when teas or recipes change
+document.querySelectorAll('[data-count="teas"]').forEach(el => { el.textContent = TEAS.length; });
+document.querySelectorAll('[data-count="recipes"]').forEach(el => { el.textContent = RECIPES.length; });
 renderCatalog();
 renderAdditives();
 renderMixology();
