@@ -9,6 +9,8 @@
   --muted:     #7a6652;
   --accent:    #6b4c2a;
   --accent2:   #c07b3c;
+  --on-accent: #ffffff;   /* text on accent-coloured buttons and tabs */
+  --chip-active: #a8602a; /* active chip and button hover (4.8:1 with white) */
   --green:     #3a7d44;
   --blue:      #3a5f9e;
   --tag-bg:    #f3ece3;
@@ -28,6 +30,8 @@
   --muted:     #a89684;
   --accent:    #d9a066;
   --accent2:   #e09a4f;
+  --on-accent: #1a120a;
+  --chip-active: #e09a4f;
   --green:     #5fb56b;
   --blue:      #7da0d8;
   --tag-bg:    #2c2419;
@@ -42,6 +46,18 @@
 [data-theme="dark"] .hero-quiz  { background: linear-gradient(135deg, #15110d 0%, #221a12 100%); }
 [data-theme="dark"] .hero-store { background: linear-gradient(135deg, #14201a 0%, #15110d 50%, #161f1b 100%); }
 [data-theme="dark"] .hero-wellness { background: linear-gradient(135deg, #221a12 0%, #15110d 50%, #1c1a26 100%); }
+
+/* Pale tag and badge colours need dark-theme versions (text 7:1 or better) */
+[data-theme="dark"] .tag.time,
+[data-theme="dark"] .tag.caffeine-none { background: rgba(95,181,107,0.14); color: #8fd39a; border-color: rgba(95,181,107,0.35); }
+[data-theme="dark"] .tag.caffeine-high,
+[data-theme="dark"] .badge-milk        { background: rgba(224,154,79,0.14); color: #f2b26f; border-color: rgba(224,154,79,0.38); }
+[data-theme="dark"] .tag.caffeine-med  { background: rgba(214,185,70,0.14); color: #e6cc6a; border-color: rgba(214,185,70,0.38); }
+[data-theme="dark"] .badge-water       { background: rgba(125,160,216,0.14); color: #a9c4ee; border-color: rgba(125,160,216,0.38); }
+[data-theme="dark"] .additive-chip.active { background: rgba(224,154,79,0.16); }
+[data-theme="dark"] .additive-pill.more   { background: #2c2419; }
+[data-theme="dark"] .difficulty-medium { color: #f2b26f; }
+[data-theme="dark"] .difficulty-hard   { color: #f28b82; }
 
 /* Light, hardcoded accent surfaces → dark equivalents */
 [data-theme="dark"] .recipe-tip        { background: #2a2014; border-color: #5a4326; }
@@ -100,7 +116,7 @@ body {
   transition: var(--transition);
 }
 .nav-btn:hover { color: var(--accent); border-color: var(--border); }
-.nav-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.nav-btn.active { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
 
 /* ─── Theme toggle ─────────────────────────────────────────── */
 .theme-toggle {
@@ -223,16 +239,16 @@ body {
 .mix-filter-btn.active,
 .store-filter-btn.active,
 .store-price-btn.active {
-  background: var(--accent2);
-  border-color: var(--accent2);
-  color: #fff;
+  background: var(--chip-active);
+  border-color: var(--chip-active);
+  color: var(--on-accent);
   box-shadow: 0 2px 10px rgba(192,123,60,0.35);
   transform: translateY(-1px);
 }
 
 /* ── Caffeine-level colour coding ── */
 [data-filter="high"].active   { background: #b83030; border-color: #b83030; box-shadow: 0 2px 8px rgba(184,48,48,0.30); }
-[data-filter="medium"].active { background: #b07820; border-color: #b07820; box-shadow: 0 2px 8px rgba(176,120,32,0.30); }
+[data-filter="medium"].active { background: #96651a; border-color: #96651a; box-shadow: 0 2px 8px rgba(150,101,26,0.30); }
 [data-filter="low"].active    { background: #2a7a40; border-color: #2a7a40; box-shadow: 0 2px 8px rgba(42,122,64,0.30); }
 [data-filter="none"].active   { background: #1a5a8a; border-color: #1a5a8a; box-shadow: 0 2px 8px rgba(26,90,138,0.30); }
 
@@ -241,6 +257,10 @@ body {
 [data-price="10to20"].active  { background: #2a6a9a; border-color: #2a6a9a; box-shadow: 0 2px 8px rgba(42,106,154,0.30); }
 [data-price="20to35"].active  { background: #7a5aaa; border-color: #7a5aaa; box-shadow: 0 2px 8px rgba(122,90,170,0.30); }
 [data-price="over35"].active  { background: #aa4a2a; border-color: #aa4a2a; box-shadow: 0 2px 8px rgba(170,74,42,0.30); }
+
+/* Colour-coded chips keep white text in both themes (all 5.0:1 or better) */
+[data-filter="high"].active, [data-filter="medium"].active, [data-filter="low"].active, [data-filter="none"].active,
+[data-price="under10"].active, [data-price="10to20"].active, [data-price="20to35"].active, [data-price="over35"].active { color: #fff; }
 
 /* ─── Tea Grid ─────────────────────────────────────────────── */
 .tea-grid {
@@ -293,7 +313,7 @@ body {
   border: 1px solid var(--border);
 }
 .tag.time         { background: #eef6f0; color: var(--green);  border-color: #c3e0cc; }
-.tag.caffeine-high{ background: #fff3e6; color: #b05a00; border-color: #ffd4a3; }
+.tag.caffeine-high{ background: #fff3e6; color: #9c5000; border-color: #ffd4a3; }
 .tag.caffeine-med { background: #fffae6; color: #856c00; border-color: #ffe999; }
 .tag.caffeine-none{ background: #eef6f0; color: var(--green);  border-color: #c3e0cc; }
 
@@ -603,7 +623,7 @@ body {
 .serving-btn.active {
   background: var(--accent);
   border-color: var(--accent);
-  color: #fff;
+  color: var(--on-accent);
 }
 
 /* ─── Quiz ──────────────────────────────────────────────────── */
@@ -656,8 +676,8 @@ body {
 }
 .quiz-nav-btn:disabled { opacity: 0.35; cursor: not-allowed; }
 .quiz-nav-btn:not(:disabled):hover { border-color: var(--accent); color: var(--accent); }
-.quiz-nav-btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
-.quiz-nav-btn.primary:not(:disabled):hover { background: var(--accent2); border-color: var(--accent2); }
+.quiz-nav-btn.primary { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.quiz-nav-btn.primary:not(:disabled):hover { background: var(--chip-active); border-color: var(--chip-active); }
 
 /* ─── Quiz Result ───────────────────────────────────────────── */
 .quiz-result {
@@ -680,8 +700,8 @@ body {
 .result-actions { display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap; }
 
 .btn { padding: 0.65rem 1.5rem; border-radius: 999px; border: 2px solid; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: var(--transition); }
-.btn-primary   { background: var(--accent);      border-color: var(--accent);  color: #fff; }
-.btn-primary:hover { background: var(--accent2); border-color: var(--accent2); }
+.btn-primary   { background: var(--accent);      border-color: var(--accent);  color: var(--on-accent); }
+.btn-primary:hover { background: var(--chip-active); border-color: var(--chip-active); }
 .btn-secondary { background: transparent; border-color: var(--border); color: var(--muted); }
 .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
 
@@ -1055,7 +1075,7 @@ body {
   flex: 1;
   padding: 0.55rem 0.8rem;
   background: var(--accent);
-  color: #fff;
+  color: var(--on-accent);
   border: none;
   border-radius: 8px;
   font-size: 0.83rem;
@@ -1067,7 +1087,7 @@ body {
 }
 
 .store-buy-btn:hover {
-  background: var(--accent2);
+  background: var(--chip-active);
 }
 
 .store-detail-btn {
@@ -1084,7 +1104,7 @@ body {
 
 .store-detail-btn:hover {
   background: var(--accent);
-  color: #fff;
+  color: var(--on-accent);
 }
 
 .store-caffeine-badge.badge-high  { color: #b03030; background: rgba(255,240,240,0.92); border-color: #f0c0c0; }
