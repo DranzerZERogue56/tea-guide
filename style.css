@@ -1207,9 +1207,10 @@ body {
     flex-shrink: 0;
   }
 
-  /* ── Hero ── */
-  .hero { padding: 1.75rem 1rem 1.25rem; }
-  .hero p { font-size: 0.9rem; }
+  /* ── Hero: title only on phones, the active tab already says where you are ── */
+  .hero { padding: 0.75rem 1rem; }
+  .hero h1 { font-size: 1.4rem; margin-bottom: 0; }
+  .hero p { display: none; }
 
   /* ── Controls & search ── */
   .controls {
@@ -1321,4 +1322,22 @@ body {
 @media (max-width: 390px) {
   .tea-grid   { grid-template-columns: 1fr; }
   .store-grid { grid-template-columns: 1fr; }
+}
+
+/* ─── Phones on their side (short screens) ──────────────────── */
+@media (max-height: 500px) {
+  .navbar {
+    position: static;
+    height: 52px;
+    padding-left: max(1.5rem, env(safe-area-inset-left));
+    padding-right: max(1.5rem, env(safe-area-inset-right));
+  }
+  .hero { padding: 0.6rem 1.5rem; }
+  .hero h1 { font-size: 1.35rem; margin-bottom: 0; }
+  .hero p { display: none; }
+  .controls, .store-controls { margin: 0.75rem max(1.5rem, env(safe-area-inset-left)) 0; }
+  .tea-grid, .mix-grid, .store-grid, .additive-strip {
+    padding-left: max(1.5rem, env(safe-area-inset-left));
+    padding-right: max(1.5rem, env(safe-area-inset-right));
+  }
 }
