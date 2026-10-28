@@ -62,7 +62,9 @@
 /* Light, hardcoded accent surfaces → dark equivalents */
 [data-theme="dark"] .recipe-tip        { background: #2a2014; border-color: #5a4326; }
 [data-theme="dark"] .wellness-disclaimer { background: #2a2410; border-color: #5a4d20; }
-[data-theme="dark"] .quiz-option:hover { background: #2a2014; }
+@media (hover: hover) {
+  [data-theme="dark"] .quiz-option:hover { background: #2a2014; }
+}
 [data-theme="dark"] .quiz-option.selected { background: #332817; }
 
 html { scroll-behavior: smooth; }
@@ -116,7 +118,9 @@ body {
   cursor: pointer;
   transition: var(--transition);
 }
-.nav-btn:hover { color: var(--accent); border-color: var(--border); }
+@media (hover: hover) {
+  .nav-btn:hover { color: var(--accent); border-color: var(--border); }
+}
 .nav-btn.active { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
 
 /* ─── Theme toggle ─────────────────────────────────────────── */
@@ -137,7 +141,9 @@ body {
   cursor: pointer;
   transition: var(--transition);
 }
-.theme-toggle:hover { border-color: var(--accent2); color: var(--accent2); }
+@media (hover: hover) {
+  .theme-toggle:hover { border-color: var(--accent2); color: var(--accent2); }
+}
 .theme-toggle .icon-sun  { display: none; }
 .theme-toggle .icon-moon { display: inline; }
 [data-theme="dark"] .theme-toggle .icon-sun  { display: inline; }
@@ -224,15 +230,17 @@ body {
   white-space: nowrap;
   line-height: 1.4;
 }
-.filter-btn:hover,
-.mix-filter-btn:hover,
-.store-filter-btn:hover,
-.store-price-btn:hover {
-  border-color: var(--accent2);
-  color: var(--accent);
-  background: var(--tag-bg);
-  transform: translateY(-1px);
-  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+@media (hover: hover) {
+  .filter-btn:hover,
+  .mix-filter-btn:hover,
+  .store-filter-btn:hover,
+  .store-price-btn:hover {
+    border-color: var(--accent2);
+    color: var(--accent);
+    background: var(--tag-bg);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  }
 }
 
 /* ── Default active (amber) ── */
@@ -291,7 +299,9 @@ body {
   background: var(--card-color, var(--accent2));
   border-radius: var(--radius) var(--radius) 0 0;
 }
-.tea-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: var(--accent2); }
+@media (hover: hover) {
+  .tea-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: var(--accent2); }
+}
 
 .tea-card-emoji { font-size: 2.5rem; margin-bottom: 0.75rem; display: block; }
 .tea-card-name  { font-size: 1.1rem; font-weight: 700; color: var(--accent); margin-bottom: 0.3rem; }
@@ -348,7 +358,9 @@ body {
   transition: var(--transition);
   user-select: none;
 }
-.additive-chip:hover { border-color: var(--accent2); color: var(--accent); }
+@media (hover: hover) {
+  .additive-chip:hover { border-color: var(--accent2); color: var(--accent); }
+}
 .additive-chip.active { background: #fff3e6; border-color: var(--accent2); color: var(--accent2); }
 
 /* ─── Mix Grid ──────────────────────────────────────────────── */
@@ -372,7 +384,9 @@ body {
   flex-direction: column;
   gap: 0.55rem;
 }
-.mix-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: var(--accent2); }
+@media (hover: hover) {
+  .mix-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: var(--accent2); }
+}
 
 .mix-card-top {
   display: flex;
@@ -552,7 +566,9 @@ body {
   justify-content: center;
   transition: var(--transition);
 }
-.modal-close:hover { background: var(--border); color: var(--accent); }
+@media (hover: hover) {
+  .modal-close:hover { background: var(--border); color: var(--accent); }
+}
 
 .modal-emoji   { font-size: 4rem; margin-bottom: 0.5rem; display: block; }
 .modal-name    { font-size: 1.7rem; font-weight: 800; color: var(--accent); margin-bottom: 0.2rem; }
@@ -622,9 +638,11 @@ body {
   padding: 0;
 }
 
-.serving-btn:hover {
-  border-color: var(--accent2);
-  color: var(--accent2);
+@media (hover: hover) {
+  .serving-btn:hover {
+    border-color: var(--accent2);
+    color: var(--accent2);
+  }
 }
 
 .serving-btn.active {
@@ -644,7 +662,9 @@ body {
   padding: 2rem 1.5rem; border: 2px solid var(--border); border-radius: 20px;
   background: var(--surface); cursor: pointer; transition: var(--transition); box-shadow: var(--shadow);
 }
-.quiz-sel-card:hover { border-color: var(--accent); transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
+@media (hover: hover) {
+  .quiz-sel-card:hover { border-color: var(--accent); transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
+}
 .quiz-sel-icon  { font-size: 2.8rem; margin-bottom: 0.75rem; }
 .quiz-sel-title { font-size: 1.2rem; font-weight: 800; color: var(--accent); margin-bottom: 0.25rem; }
 .quiz-sel-count { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent2); margin-bottom: 0.75rem; }
@@ -668,7 +688,9 @@ body {
   padding: 0.9rem 1.1rem; border: 2px solid var(--border); border-radius: 12px;
   background: var(--bg); cursor: pointer; transition: var(--transition); text-align: left; width: 100%;
 }
-.quiz-option:hover    { border-color: var(--accent2); background: #fff8f0; }
+@media (hover: hover) {
+  .quiz-option:hover    { border-color: var(--accent2); background: #fff8f0; }
+}
 .quiz-option.selected { border-color: var(--accent); background: #f5ede0; }
 
 .option-icon  { font-size: 1.4rem; flex-shrink: 0; }
@@ -682,9 +704,13 @@ body {
   background: var(--surface); font-size: 0.95rem; font-weight: 600; color: var(--muted); cursor: pointer; transition: var(--transition);
 }
 .quiz-nav-btn:disabled { opacity: 0.35; cursor: not-allowed; }
-.quiz-nav-btn:not(:disabled):hover { border-color: var(--accent); color: var(--accent); }
+@media (hover: hover) {
+  .quiz-nav-btn:not(:disabled):hover { border-color: var(--accent); color: var(--accent); }
+}
 .quiz-nav-btn.primary { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
-.quiz-nav-btn.primary:not(:disabled):hover { background: var(--chip-active); border-color: var(--chip-active); }
+@media (hover: hover) {
+  .quiz-nav-btn.primary:not(:disabled):hover { background: var(--chip-active); border-color: var(--chip-active); }
+}
 
 /* ─── Quiz Result ───────────────────────────────────────────── */
 .quiz-result {
@@ -708,9 +734,13 @@ body {
 
 .btn { padding: 0.65rem 1.5rem; border-radius: 999px; border: 2px solid; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: var(--transition); }
 .btn-primary   { background: var(--accent);      border-color: var(--accent);  color: var(--on-accent); }
-.btn-primary:hover { background: var(--chip-active); border-color: var(--chip-active); }
+@media (hover: hover) {
+  .btn-primary:hover { background: var(--chip-active); border-color: var(--chip-active); }
+}
 .btn-secondary { background: transparent; border-color: var(--border); color: var(--muted); }
-.btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+@media (hover: hover) {
+  .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+}
 
 .runner-ups   { margin-top: 1.5rem; border-top: 1px solid var(--border); padding-top: 1.2rem; }
 .runner-title { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin-bottom: 0.75rem; }
@@ -790,10 +820,12 @@ body {
   box-shadow: var(--shadow);
 }
 
-.ailment-card:hover {
-  border-color: var(--accent2);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 28px rgba(0,0,0,0.10);
+@media (hover: hover) {
+  .ailment-card:hover {
+    border-color: var(--accent2);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(0,0,0,0.10);
+  }
 }
 
 .ailment-emoji {
@@ -827,9 +859,11 @@ body {
   margin-bottom: 1.5rem;
   display: inline-block;
 }
-.wellness-back-btn:hover {
-  border-color: var(--accent);
-  color: var(--accent);
+@media (hover: hover) {
+  .wellness-back-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
 }
 
 .wellness-result-header {
@@ -897,11 +931,13 @@ body {
   margin-top: 0.1rem;
 }
 
-.remedy-card:hover {
-  border-color: var(--card-color, var(--accent2));
-  box-shadow: 0 8px 28px rgba(0,0,0,0.11);
-  transform: translateY(-2px);
-  transition: var(--transition);
+@media (hover: hover) {
+  .remedy-card:hover {
+    border-color: var(--card-color, var(--accent2));
+    box-shadow: 0 8px 28px rgba(0,0,0,0.11);
+    transform: translateY(-2px);
+    transition: var(--transition);
+  }
 }
 
 .remedy-view-hint {
@@ -914,8 +950,10 @@ body {
   margin-left: 0.3rem;
 }
 
-.remedy-card:hover .remedy-view-hint {
-  opacity: 1;
+@media (hover: hover) {
+  .remedy-card:hover .remedy-view-hint {
+    opacity: 1;
+  }
 }
 
 .remedy-reason {
@@ -974,9 +1012,11 @@ body {
   transition: transform var(--transition), box-shadow var(--transition);
 }
 
-.store-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 28px rgba(0,0,0,0.12);
+@media (hover: hover) {
+  .store-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 28px rgba(0,0,0,0.12);
+  }
 }
 
 .store-card-pending {
@@ -1001,8 +1041,10 @@ body {
   transition: transform 0.35s ease;
 }
 
-.store-card:hover .store-img {
-  transform: scale(1.04);
+@media (hover: hover) {
+  .store-card:hover .store-img {
+    transform: scale(1.04);
+  }
 }
 
 .store-img-fallback {
@@ -1093,8 +1135,10 @@ body {
   transition: background var(--transition);
 }
 
-.store-buy-btn:hover {
-  background: var(--chip-active);
+@media (hover: hover) {
+  .store-buy-btn:hover {
+    background: var(--chip-active);
+  }
 }
 
 .store-detail-btn {
@@ -1109,9 +1153,11 @@ body {
   transition: background var(--transition), color var(--transition);
 }
 
-.store-detail-btn:hover {
-  background: var(--accent);
-  color: var(--on-accent);
+@media (hover: hover) {
+  .store-detail-btn:hover {
+    background: var(--accent);
+    color: var(--on-accent);
+  }
 }
 
 .store-caffeine-badge.badge-high  { color: #b03030; background: rgba(255,240,240,0.92); border-color: #f0c0c0; }
@@ -1122,7 +1168,9 @@ body {
 .store-unit-pending  { font-style: italic; }
 .store-price-pending { color: var(--muted) !important; font-weight: 400 !important; font-size: 0.95rem !important; }
 .store-buy-search    { background: var(--green); }
-.store-buy-search:hover { background: #2d6636; }
+@media (hover: hover) {
+  .store-buy-search:hover { background: #2d6636; }
+}
 
 .store-controls {
   gap: 0.75rem;
@@ -1259,7 +1307,6 @@ body {
   .tea-card { padding: 1rem; }
   .tea-card-emoji { font-size: 2rem; margin-bottom: 0.4rem; }
   .tea-card-name  { font-size: 1rem; }
-  .tea-card-desc  { -webkit-line-clamp: 2; font-size: 0.82rem; }
 
   /* ── Mixology ── */
   .mix-grid {
@@ -1342,10 +1389,22 @@ body {
   .footer { font-size: 0.78rem; padding: 1rem; }
 }
 
-/* ─── Very small phones (≤ 390px) ───────────────────────────── */
-@media (max-width: 390px) {
-  .tea-grid   { grid-template-columns: 1fr; }
-  .store-grid { grid-template-columns: 1fr; }
+/* ─── Catalog cards on phones: one rule for every phone width ─
+   2 columns from 360px up (1 column below that), 14px description clamped
+   to 3 lines, tags stay whole and wrap onto the next row. */
+@media (max-width: 640px) {
+  .tea-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tea-card-desc { font-size: 0.875rem; line-height: 1.5; -webkit-line-clamp: 3; margin-bottom: 0.75rem; }
+  .tea-card .tea-tags { gap: 0.3rem; }
+  .tea-card .tag { white-space: nowrap; padding: 0.2rem 0.5rem; }
+}
+@media (max-width: 359px) {
+  .tea-grid { grid-template-columns: 1fr; }
+}
+
+/* ─── Touch screens: no hover, so the "View tea" hint is always shown ─ */
+@media (hover: none) {
+  .remedy-view-hint { opacity: 1; }
 }
 
 /* ─── Phones on their side (short screens) ──────────────────── */
@@ -1386,10 +1445,6 @@ body {
   .option-label { font-size: 1.0625rem; }
   .option-sub { font-size: 0.875rem; }
   .modal-desc, .benefit-list li, .step-list li, .ingredient-list li { font-size: 1rem; }
-  .tea-card-desc { font-size: 0.875rem; }
-}
-@media (max-width: 390px) {
-  .tea-card-desc { font-size: 0.9375rem; }
 }
 
 /* ─── Chip rows scroll sideways on phones instead of wrapping ─ */
