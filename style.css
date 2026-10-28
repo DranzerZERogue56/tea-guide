@@ -1486,3 +1486,34 @@ body {
   .nav-ico { display: block; font-size: 1.4rem; line-height: 1; }
   .nav-btn.active { background: var(--tag-bg); color: var(--accent); }
 }
+
+/* ─── Quiz on phones: question first, Back/Next pinned ──────── */
+@media (max-width: 640px), (max-height: 500px) {
+  body.quiz-running #hero-quiz { display: none; }
+  .quiz-container { padding-bottom: 6rem; }
+  .quiz-nav {
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    z-index: 90;
+    gap: 0.75rem;
+    margin-top: 0;
+    padding: 0.5rem max(1rem, env(safe-area-inset-right)) calc(0.5rem + env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left));
+    background: var(--nav-bg);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid var(--border);
+  }
+  .quiz-nav-btn.primary { flex: 1; }
+  .quiz-nav-btn:not(.primary) { min-width: 96px; }
+}
+@media (max-width: 640px) and (min-height: 501px) {
+  .quiz-nav { bottom: calc(60px + env(safe-area-inset-bottom)); padding-bottom: 0.5rem; }
+  .quiz-container { padding-bottom: 9rem; }
+}
+@media (max-height: 500px) {
+  .quiz-container { margin: 0.5rem auto; max-width: 820px; }
+  .quiz-progress { margin-bottom: 0.5rem; }
+  .quiz-card { padding: 0.75rem 1.25rem 1rem; min-height: 0; }
+  .quiz-hint { margin-bottom: 0.5rem; }
+  .quiz-options { grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+  .quiz-nav-btn { min-height: 48px; }
+}

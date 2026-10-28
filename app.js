@@ -478,6 +478,7 @@ document.querySelectorAll('.nav-btn').forEach(btn => {
 });
 
 function switchView(view) {
+  const prevView = currentView;
   currentView = view;
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.toggle('active', b.dataset.view === view));
   document.getElementById('view-catalog').classList.toggle('hidden', view !== 'catalog');
@@ -490,7 +491,8 @@ function switchView(view) {
   document.getElementById('hero-quiz').classList.toggle('hidden', view !== 'quiz');
   document.getElementById('hero-wellness').classList.toggle('hidden', view !== 'wellness');
   document.getElementById('hero-store').classList.toggle('hidden', view !== 'store');
-  if (view === 'quiz') resetQuiz();
+  if (view === 'quiz' && prevView !== 'quiz') resetQuiz(); // tapping the active tab must not wipe answers
+  if (view !== 'quiz') setQuizRunning(false);
   if (view === 'wellness') resetWellness();
 }
 
@@ -772,12 +774,16 @@ document.getElementById('shared-modal').addEventListener('click', e => {
 });
 
 // ─── Quiz ─────────────────────────────────────────────────────────────────────
+// While a quiz is running the page hides the intro hero and pins Back/Next (see style.css)
+function setQuizRunning(on) { document.body.classList.toggle('quiz-running', on); }
+
 function resetQuiz() {
   quizAnswers = {}; quizStep = 0; currentQuizMode = null; activeQuestions = QUESTIONS;
   document.getElementById('quiz-result').classList.add('hidden');
   document.getElementById('quiz-card').classList.add('hidden');
   document.querySelector('.quiz-progress').style.display = 'none';
   document.querySelector('.quiz-nav').style.display = 'none';
+  setQuizRunning(false);
   document.getElementById('quiz-selection').classList.remove('hidden');
 }
 
@@ -788,6 +794,7 @@ function startQuiz(mode) {
   document.getElementById('quiz-card').classList.remove('hidden');
   document.querySelector('.quiz-progress').style.display = 'flex';
   document.querySelector('.quiz-nav').style.display = 'flex';
+  setQuizRunning(true);
   renderQuestion();
 }
 
@@ -862,6 +869,7 @@ function showResult() {
   document.getElementById('quiz-card').classList.add('hidden');
   document.querySelector('.quiz-progress').style.display = 'none';
   document.querySelector('.quiz-nav').style.display = 'none';
+  setQuizRunning(false);
 
   const resultEl = document.getElementById('quiz-result');
   resultEl.innerHTML = `
@@ -1040,6 +1048,7 @@ function showIndepthResult() {
   document.getElementById('quiz-card').classList.add('hidden');
   document.querySelector('.quiz-progress').style.display = 'none';
   document.querySelector('.quiz-nav').style.display = 'none';
+  setQuizRunning(false);
 
   const resultEl = document.getElementById('quiz-result');
   resultEl.innerHTML = `
