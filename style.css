@@ -83,7 +83,6 @@ body {
   z-index: 100;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   padding: 0 2rem;
   height: 64px;
   background: var(--nav-bg);
@@ -92,6 +91,7 @@ body {
 }
 
 .nav-brand {
+  margin-right: auto;
   font-size: 1.25rem;
   font-weight: 700;
   color: var(--accent);
@@ -102,6 +102,7 @@ body {
 }
 
 .leaf-icon { font-size: 1.4rem; }
+.nav-ico { display: none; }
 .nav-links { display: flex; gap: 0.5rem; }
 
 .nav-btn {
@@ -1199,24 +1200,19 @@ body {
 /* ─── Responsive — mobile ────────────────────────────────────── */
 @media (max-width: 640px) {
 
-  /* ── Navbar: brand row + horizontally scrollable tab row ── */
+  /* ── Navbar: one short row (brand and theme toggle); tabs live in the bottom bar below ── */
   .navbar {
-    height: auto;
-    flex-direction: column;
-    align-items: stretch;
-    padding: 0.65rem 1rem 0;
-    gap: 0;
+    height: 56px;
+    padding: 0 1rem;
+    position: static;
+    backdrop-filter: none;
   }
-  .nav-brand {
-    font-size: 1.05rem;
-    padding-bottom: 0.5rem;
-  }
+  .nav-brand { font-size: 1.1rem; }
   .nav-links {
-    display: flex;
+    min-width: 0;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     gap: 0.35rem;
-    padding: 0 0 0.65rem;
     scrollbar-width: none;
   }
   .nav-links::-webkit-scrollbar { display: none; }
@@ -1455,3 +1451,38 @@ body {
 [data-theme="dark"] .store-caf-inline.badge-med  { color: #e6cc6a; }
 [data-theme="dark"] .store-caf-inline.badge-low  { color: #8fd39a; }
 [data-theme="dark"] .store-caf-inline.badge-free { color: #8fb8e8; }
+
+/* ─── Portrait phones: bottom tab bar in thumb reach ────────── */
+@media (max-width: 640px) and (min-height: 501px) {
+  body { padding-bottom: calc(60px + env(safe-area-inset-bottom)); }
+  .nav-links {
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    z-index: 100;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0;
+    padding: 4px 6px calc(4px + env(safe-area-inset-bottom));
+    overflow: visible;
+    background: var(--nav-bg);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid var(--border);
+  }
+  .nav-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    min-height: 56px;
+    padding: 4px 2px;
+    border: 0;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    line-height: 1.2;
+    white-space: normal;
+    text-align: center;
+  }
+  .nav-ico { display: block; font-size: 1.4rem; line-height: 1; }
+  .nav-btn.active { background: var(--tag-bg); color: var(--accent); }
+}
