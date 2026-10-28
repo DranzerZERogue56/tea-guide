@@ -7,7 +7,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <title>Tea Guide</title>
-  <link rel="stylesheet" href="style.css?v=3" />
+  <link rel="stylesheet" href="style.css?v=6" />
   <script>
     // Apply saved/system theme before paint to avoid a flash of the wrong theme.
     (function () {
@@ -32,6 +32,7 @@
       <button class="nav-btn" data-view="quiz"><span class="nav-ico" aria-hidden="true">&#128269;</span><span class="nav-label">Find My Tea</span></button>
       <button class="nav-btn" data-view="wellness"><span class="nav-ico" aria-hidden="true">&#127807;</span><span class="nav-label">Tea Remedy</span></button>
       <button class="nav-btn" data-view="store"><span class="nav-ico" aria-hidden="true">&#128722;</span><span class="nav-label">Store</span></button>
+      <button class="nav-btn" data-view="gear"><span class="nav-ico" aria-hidden="true">&#9881;&#65039;</span><span class="nav-label">Brew Gear</span></button>
     </div>
     <button class="theme-toggle" id="theme-toggle" type="button"
             aria-label="Toggle dark mode" title="Toggle dark mode">
@@ -58,6 +59,11 @@
   <header class="hero hero-store hidden" id="hero-store">
     <h1>Tea Store</h1>
     <p>Shop 120 teas from trusted retailers — with real prices, product images, and direct links.</p>
+  </header>
+
+  <header class="hero hero-gear hidden" id="hero-gear">
+    <h1>Brew Gear</h1>
+    <p>Fun tools for brewing a better cup.</p>
   </header>
 
   <header class="hero hero-wellness hidden" id="hero-wellness">
@@ -178,6 +184,15 @@
     <section class="store-grid" id="store-grid"></section>
   </main>
 
+  <!-- GEAR VIEW -->
+  <main id="view-gear" class="hidden">
+    <section class="controls">
+      <input type="text" id="gear-search" placeholder="Search gear..." class="search-input" aria-label="Search gear" />
+      <div class="filter-buttons" id="gear-filters"></div>
+    </section>
+    <section class="gear-grid" id="gear-grid"></section>
+  </main>
+
   <!-- WELLNESS VIEW -->
   <main id="view-wellness" class="hidden">
     <div class="wellness-container">
@@ -217,20 +232,21 @@
   </footer>
 
   <!-- Data batches (loaded before app.js) -->
-  <script src="data/high-caffeine.js"></script>
-  <script src="data/high-caffeine-2.js"></script>
-  <script src="data/medium-caffeine.js"></script>
-  <script src="data/medium-caffeine-2.js"></script>
-  <script src="data/low-caffeine.js"></script>
-  <script src="data/low-caffeine-2.js"></script>
-  <script src="data/caffeine-free.js"></script>
-  <script src="data/caffeine-free-2.js"></script>
-  <script src="data/store.js"></script>
-  <script src="data/recipes-1.js"></script>
-  <script src="data/recipes-2.js"></script>
-  <script src="data/recipes-3.js"></script>
+  <script src="data/high-caffeine.js?v=6"></script>
+  <script src="data/high-caffeine-2.js?v=6"></script>
+  <script src="data/medium-caffeine.js?v=6"></script>
+  <script src="data/medium-caffeine-2.js?v=6"></script>
+  <script src="data/low-caffeine.js?v=6"></script>
+  <script src="data/low-caffeine-2.js?v=6"></script>
+  <script src="data/caffeine-free.js?v=6"></script>
+  <script src="data/caffeine-free-2.js?v=6"></script>
+  <script src="data/store.js?v=6"></script>
+  <script src="data/recipes-1.js?v=6"></script>
+  <script src="data/recipes-2.js?v=6"></script>
+  <script src="data/recipes-3.js?v=6"></script>
+  <script src="data/hardware.js?v=6"></script>
   <!-- App logic -->
-  <script src="app.js?v=3"></script>
+  <script src="app.js?v=6"></script>
 
   <!-- Theme toggle -->
   <script>
