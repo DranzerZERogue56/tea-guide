@@ -1,7 +1,8 @@
 'use strict';
 
 // ─── Assemble data from batch files ──────────────────────────────────────────
-const TEAS    = [...TEAS_HIGH, ...TEAS_HIGH2, ...TEAS_MEDIUM, ...TEAS_MEDIUM2, ...TEAS_LOW, ...TEAS_LOW2, ...TEAS_FREE, ...TEAS_FREE2];
+const TEAS    = [...TEAS_HIGH, ...TEAS_HIGH2, ...TEAS_MEDIUM, ...TEAS_MEDIUM2, ...TEAS_LOW, ...TEAS_LOW2, ...TEAS_FREE, ...TEAS_FREE2, ...TEAS_NEW];
+Object.assign(STORE_DATA, STORE_DATA_NEW); // store entries for the newer teas
 const RECIPES = [...RECIPES_1, ...RECIPES_2, ...RECIPES_3];
 
 // Some emoji fields are plain letters, or country flags (Windows shows flags as letters like "TR").
