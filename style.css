@@ -216,7 +216,7 @@ body {
 .filter-buttons { display: flex; flex-wrap: wrap; gap: 0.4rem; }
 
 /* ── Shared filter pill base ── */
-.filter-btn, .mix-filter-btn, .store-filter-btn, .store-price-btn {
+.filter-btn, .mix-filter-btn, .store-filter-btn, .store-price-btn, .gear-filter-btn {
   padding: 0.38rem 1rem;
   border: 1.5px solid var(--border);
   border-radius: 999px;
@@ -234,7 +234,8 @@ body {
   .filter-btn:hover,
   .mix-filter-btn:hover,
   .store-filter-btn:hover,
-  .store-price-btn:hover {
+  .store-price-btn:hover,
+  .gear-filter-btn:hover {
     border-color: var(--accent2);
     color: var(--accent);
     background: var(--tag-bg);
@@ -247,7 +248,8 @@ body {
 .filter-btn.active,
 .mix-filter-btn.active,
 .store-filter-btn.active,
-.store-price-btn.active {
+.store-price-btn.active,
+.gear-filter-btn.active {
   background: var(--chip-active);
   border-color: var(--chip-active);
   color: var(--on-accent);
@@ -1292,7 +1294,7 @@ body {
     max-width: 100%;
     font-size: 1rem; /* prevents iOS auto-zoom on focus */
   }
-  .filter-btn, .mix-filter-btn, .store-filter-btn, .store-price-btn {
+  .filter-btn, .mix-filter-btn, .store-filter-btn, .store-price-btn, .gear-filter-btn {
     padding: 0.45rem 0.85rem;
     font-size: 0.78rem;
   }
@@ -1430,7 +1432,7 @@ body {
   .nav-btn { min-height: 44px; }
   .theme-toggle { width: 44px; height: 44px; }
   .search-input { min-height: 48px; font-size: 1rem; }
-  .filter-btn, .mix-filter-btn, .store-filter-btn, .store-price-btn, .additive-chip {
+  .filter-btn, .mix-filter-btn, .store-filter-btn, .store-price-btn, .gear-filter-btn, .additive-chip {
     min-height: 44px;
     font-size: 0.875rem;
   }
@@ -1462,7 +1464,7 @@ body {
             mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent);
   }
   .filter-buttons::-webkit-scrollbar, .additive-chips::-webkit-scrollbar { display: none; }
-  .filter-btn, .mix-filter-btn, .store-filter-btn, .store-price-btn, .additive-chip,
+  .filter-btn, .mix-filter-btn, .store-filter-btn, .store-price-btn, .gear-filter-btn, .additive-chip,
   .store-filter-label { flex-shrink: 0; }
   .controls { gap: 0.6rem; }
 }
@@ -1523,7 +1525,7 @@ body {
     left: 0; right: 0; bottom: 0;
     z-index: 100;
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(6, 1fr);
     gap: 0;
     padding: 4px 6px calc(4px + env(safe-area-inset-bottom));
     overflow: visible;
@@ -1593,4 +1595,184 @@ body {
   .modal-origin { margin-bottom: 0.5rem; }
   .modal-desc { margin-bottom: 1rem; }
   .modal-stats { margin-bottom: 1rem; }
+}
+
+/* ─── Brew Gear ─────────────────────────────────────────────── */
+.hero-gear { background: linear-gradient(135deg, #f5ede0 0%, #fdf8f2 50%, #e9f3f0 100%); }
+[data-theme="dark"] .hero-gear { background: linear-gradient(135deg, #221a12 0%, #15110d 50%, #14211e 100%); }
+
+/* One calm accent colour per category; the text always stays in the normal theme colours */
+.gear-cat-kettles  { --gear-color: #c07b3c; }
+.gear-cat-infusers { --gear-color: #3a8a6a; }
+.gear-cat-brewers  { --gear-color: #3a5f9e; }
+.gear-cat-matcha   { --gear-color: #6a9a3a; }
+.gear-cat-tools    { --gear-color: #8a7560; }
+.gear-cat-fun      { --gear-color: #b0577a; }
+[data-theme="dark"] .gear-cat-kettles  { --gear-color: #e09a4f; }
+[data-theme="dark"] .gear-cat-infusers { --gear-color: #5fc09a; }
+[data-theme="dark"] .gear-cat-brewers  { --gear-color: #7da0d8; }
+[data-theme="dark"] .gear-cat-matcha   { --gear-color: #9acd5a; }
+[data-theme="dark"] .gear-cat-tools    { --gear-color: #b8a38c; }
+[data-theme="dark"] .gear-cat-fun      { --gear-color: #e08aac; }
+
+.gear-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.4rem;
+  max-width: 1100px;
+  margin: 1.5rem auto 3rem;
+  padding: 0 1.5rem;
+}
+
+.gear-card {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  font: inherit;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.4rem;
+  cursor: pointer;
+  transition: var(--transition);
+}
+.gear-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: var(--gear-color, var(--accent2));
+}
+.gear-card:focus-visible { outline: 2px solid var(--accent2); outline-offset: 2px; }
+.gear-card-emoji { font-size: 2.5rem; line-height: 1; margin-bottom: 0.75rem; display: block; }
+.gear-card-body  { display: flex; flex-direction: column; gap: 0.35rem; min-width: 0; width: 100%; }
+.gear-card-name  { font-size: 1.1rem; font-weight: 700; color: var(--accent); overflow-wrap: anywhere; }
+.gear-card-tagline { font-size: 0.88rem; line-height: 1.5; color: var(--text); }
+.gear-card-meta  { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 0.6rem; margin-top: 0.25rem; }
+.gear-card-best  { font-size: 0.8125rem; line-height: 1.45; color: var(--muted); }
+.gear-card-best strong { color: var(--text); font-weight: 700; }
+
+.gear-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.2rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  background: var(--tag-bg);
+  color: var(--accent);
+  border: 1px solid var(--border);
+}
+.gear-badge::before {
+  content: '';
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--gear-color, var(--accent2));
+}
+.gear-price { font-size: 0.875rem; font-weight: 700; color: var(--text); }
+
+.gear-empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 2.5rem 1rem;
+  color: var(--muted);
+}
+.gear-empty-emoji { font-size: 2.5rem; display: block; margin-bottom: 0.5rem; }
+.gear-empty p { max-width: 380px; margin: 0 auto; line-height: 1.6; }
+
+/* Detail sheet */
+.gear-modal-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 0.75rem; }
+.gear-funfact {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  margin-top: 1.2rem;
+  padding: 0.9rem 1rem;
+  background: var(--tag-bg);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--gear-color, var(--accent2));
+  border-radius: 12px;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--text);
+}
+.gear-funfact-label {
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--accent);
+}
+.gear-shops { display: flex; flex-direction: column; gap: 0.6rem; }
+.gear-shop-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.75rem;
+  padding: 0.7rem 0.9rem;
+  background: var(--tag-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+.gear-shop-info { display: flex; flex-direction: column; min-width: 0; }
+.gear-shop-name { font-weight: 700; color: var(--text); font-size: 0.95rem; overflow-wrap: anywhere; }
+.gear-shop-price { font-size: 0.9rem; color: var(--muted); }
+.gear-buy-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0.5rem 1.1rem;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration: none;
+  text-align: center;
+  transition: var(--transition);
+}
+.gear-buy-btn:focus-visible { outline: 2px solid var(--accent2); outline-offset: 2px; }
+.gear-soon { font-size: 0.95rem; color: var(--muted); padding: 0.7rem 0.9rem; background: var(--tag-bg); border: 1px dashed var(--border); border-radius: 12px; }
+
+@media (hover: hover) {
+  .gear-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: var(--accent2); }
+  .gear-buy-btn:hover { background: var(--chip-active); }
+}
+
+@media (max-width: 900px) {
+  .gear-grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+}
+
+/* Phones: one column of compact row cards, emoji on the left */
+@media (max-width: 640px), (max-height: 500px) {
+  .gear-grid { grid-template-columns: 1fr; gap: 0.65rem; padding: 0 0.75rem; margin: 0.75rem auto 2rem; }
+  .gear-card { flex-direction: row; align-items: flex-start; gap: 0.85rem; padding: 0.9rem; min-height: 44px; }
+  .gear-card-emoji { font-size: 2.25rem; margin: 0; width: 2.5rem; flex-shrink: 0; text-align: center; padding-top: 0.15rem; }
+  .gear-card-name { font-size: 1rem; }
+  .gear-card-tagline { font-size: 0.875rem; }
+  .gear-modal .gear-buy-btn { width: 100%; }
+  .gear-modal .gear-shop-row { flex-direction: column; align-items: stretch; }
+  .gear-funfact, .gear-modal .benefit-list li { font-size: 1rem; }
+}
+@media (max-height: 500px) {
+  .gear-grid {
+    padding-left: max(1.5rem, env(safe-area-inset-left));
+    padding-right: max(1.5rem, env(safe-area-inset-right));
+  }
+}
+@media (max-height: 500px) and (min-width: 700px) {
+  .gear-grid { grid-template-columns: repeat(2, 1fr); }
+}
+/* Six tabs on a short wide screen: keep the brand on one line and tighten the tabs */
+@media (max-height: 500px) {
+  .nav-brand { white-space: nowrap; flex-shrink: 0; }
+  .nav-links { min-width: 0; gap: 0.25rem; }
+  .nav-btn { padding: 0.42rem 0.7rem; white-space: nowrap; flex-shrink: 0; }
 }

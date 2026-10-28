@@ -496,11 +496,13 @@ function switchView(view) {
   document.getElementById('view-quiz').classList.toggle('hidden', view !== 'quiz');
   document.getElementById('view-wellness').classList.toggle('hidden', view !== 'wellness');
   document.getElementById('view-store').classList.toggle('hidden', view !== 'store');
+  document.getElementById('view-gear').classList.toggle('hidden', view !== 'gear');
   document.getElementById('hero-catalog').classList.toggle('hidden', view !== 'catalog');
   document.getElementById('hero-mixology').classList.toggle('hidden', view !== 'mixology');
   document.getElementById('hero-quiz').classList.toggle('hidden', view !== 'quiz');
   document.getElementById('hero-wellness').classList.toggle('hidden', view !== 'wellness');
   document.getElementById('hero-store').classList.toggle('hidden', view !== 'store');
+  document.getElementById('hero-gear').classList.toggle('hidden', view !== 'gear');
   if (view === 'quiz' && prevView !== 'quiz') resetQuiz(); // tapping the active tab must not wipe answers
   if (view !== 'quiz') setQuizRunning(false);
   if (view === 'wellness') resetWellness();
@@ -1349,6 +1351,131 @@ document.getElementById('store-sort').addEventListener('change', e => {
 document.getElementById('start-basic').addEventListener('click', () => startQuiz('basic'));
 document.getElementById('start-indepth').addEventListener('click', () => startQuiz('indepth'));
 
+// ─── Brew Gear ────────────────────────────────────────────────────────────────
+const GEAR_CATEGORIES = [
+  { id: 'kettles',  label: 'Kettles' },
+  { id: 'infusers', label: 'Infusers' },
+  { id: 'brewers',  label: 'Brewers' },
+  { id: 'matcha',   label: 'Matcha gear' },
+  { id: 'tools',    label: 'Tools' },
+  { id: 'fun',      label: 'Fun stuff' }
+];
+const GEAR_LIST = (typeof HARDWARE !== 'undefined' && Array.isArray(HARDWARE)) ? HARDWARE : null;
+let gearFilter = 'all';
+let gearSearch = '';
+
+// The gear data is outside text, so everything goes through this before it reaches innerHTML
+function escHtml(s) {
+  return String(s == null ? '' : s).replace(/[&<>"']/g, c =>
+    ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+function gearCatLabel(id) {
+  const c = GEAR_CATEGORIES.find(x => x.id === id);
+  return c ? c.label : id;
+}
+function gearCatKnown(id) { return GEAR_CATEGORIES.some(x => x.id === id) ? id : 'tools'; }
+
+function renderGearFilters() {
+  const box = document.getElementById('gear-filters');
+  const counts = {};
+  GEAR_LIST.forEach(g => { counts[g.category] = (counts[g.category] || 0) + 1; });
+  const chips = [{ id: 'all', label: 'All', n: GEAR_LIST.length }]
+    .concat(GEAR_CATEGORIES.map(c => ({ id: c.id, label: c.label, n: counts[c.id] || 0 })));
+  box.innerHTML = chips.map(c =>
+    `<button class="gear-filter-btn${c.id === gearFilter ? ' active' : ''}" data-gear-cat="${c.id}">${escHtml(c.label)} (<span data-count="gear-${c.id}">${c.n}</span>)</button>`
+  ).join('');
+  box.querySelectorAll('.gear-filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      box.querySelectorAll('.gear-filter-btn').forEach(b => b.classList.toggle('active', b === btn));
+      gearFilter = btn.dataset.gearCat;
+      renderGear();
+    });
+  });
+}
+
+function renderGear() {
+  const grid = document.getElementById('gear-grid');
+  const items = GEAR_LIST.filter(g => {
+    if (gearFilter !== 'all' && g.category !== gearFilter) return false;
+    if (!gearSearch) return true;
+    const hay = [g.name, g.tagline].concat(g.bestFor || []).join(' ').toLowerCase();
+    return hay.includes(gearSearch);
+  });
+  if (!items.length) {
+    grid.innerHTML = '<div class="gear-empty"><span class="gear-empty-emoji" aria-hidden="true">&#128269;</span><p>No gear matches that search. Try a different word or pick another category.</p></div>';
+    return;
+  }
+  grid.innerHTML = items.map(g => {
+    const cat = gearCatKnown(g.category);
+    return `
+    <button type="button" class="gear-card gear-cat-${cat}" data-gear-id="${escHtml(g.id)}">
+      <span class="gear-card-emoji" aria-hidden="true">${escHtml(g.emoji)}</span>
+      <span class="gear-card-body">
+        <span class="gear-card-name">${escHtml(g.name)}</span>
+        <span class="gear-card-tagline">${escHtml(g.tagline)}</span>
+        <span class="gear-card-meta">
+          <span class="gear-badge">${escHtml(gearCatLabel(g.category))}</span>
+          ${g.priceRange ? `<span class="gear-price">${escHtml(g.priceRange)}</span>` : ''}
+        </span>
+        ${(g.bestFor && g.bestFor.length) ? `<span class="gear-card-best"><strong>Best for:</strong> ${escHtml(g.bestFor.join(', '))}</span>` : ''}
+      </span>
+    </button>`;
+  }).join('');
+  grid.querySelectorAll('.gear-card').forEach(card => {
+    card.addEventListener('click', () => openGearModal(card.dataset.gearId));
+  });
+}
+
+function openGearModal(id) {
+  const g = GEAR_LIST.find(x => x.id === id);
+  if (!g) return;
+  currentModalTeaId = null;
+  currentModalRecipeId = null;
+  const cat = gearCatKnown(g.category);
+  const shops = Array.isArray(g.shops) ? g.shops : [];
+  const shopsHtml = shops.length
+    ? shops.map(s => `
+      <div class="gear-shop-row">
+        <div class="gear-shop-info">
+          <span class="gear-shop-name">${escHtml(s.store)}</span>
+          ${typeof s.price === 'number' ? `<span class="gear-shop-price">$${s.price.toFixed(2)}</span>` : ''}
+        </div>
+        <a class="gear-buy-btn" href="${escHtml(s.url)}" target="_blank" rel="noopener noreferrer">Buy at ${escHtml(s.store)} &#8599;</a>
+      </div>`).join('')
+    : '<p class="gear-soon">Price and shops coming soon.</p>';
+  document.getElementById('modal-content').innerHTML = `
+    <div class="gear-modal gear-cat-${cat}">
+      <span class="modal-emoji" aria-hidden="true">${escHtml(g.emoji)}</span>
+      <div class="modal-name">${escHtml(g.name)}</div>
+      <div class="modal-origin gear-modal-meta"><span class="gear-badge">${escHtml(gearCatLabel(g.category))}</span>${g.priceRange ? `<span class="gear-price">${escHtml(g.priceRange)}</span>` : ''}</div>
+      <p class="modal-desc">${escHtml(g.desc)}</p>
+      ${(g.bestFor && g.bestFor.length) ? `<div class="modal-section-title">Best for</div>
+      <ul class="benefit-list">${g.bestFor.map(b => `<li>${escHtml(b)}</li>`).join('')}</ul>` : ''}
+      ${g.funFact ? `<div class="gear-funfact"><span class="gear-funfact-label">Fun fact</span><span>${escHtml(g.funFact)}</span></div>` : ''}
+      ${(g.tips && g.tips.length) ? `<div class="modal-section-title">Tips</div>
+      <ul class="benefit-list">${g.tips.map(t => `<li>${escHtml(t)}</li>`).join('')}</ul>` : ''}
+      <div class="modal-section-title">Where to buy</div>
+      <div class="gear-shops">${shopsHtml}</div>
+    </div>`;
+  document.getElementById('shared-modal').scrollTop = 0;
+  openModal();
+}
+
+function initGear() {
+  const grid = document.getElementById('gear-grid');
+  if (!GEAR_LIST) {
+    document.querySelector('#view-gear .controls').classList.add('hidden');
+    grid.innerHTML = '<div class="gear-empty"><span class="gear-empty-emoji" aria-hidden="true">&#9881;&#65039;</span><p>The gear list could not load right now. Please refresh the page to try again.</p></div>';
+    return;
+  }
+  renderGearFilters();
+  renderGear();
+  document.getElementById('gear-search').addEventListener('input', e => {
+    gearSearch = e.target.value.toLowerCase().trim();
+    renderGear();
+  });
+}
+
 // ─── Init ─────────────────────────────────────────────────────────────────────
 // Counts in the page text come from the data, so they stay right when teas or recipes change
 document.querySelectorAll('[data-count="teas"]').forEach(el => { el.textContent = TEAS.length; });
@@ -1357,3 +1484,4 @@ renderCatalog();
 renderAdditives();
 renderMixology();
 renderStore();
+initGear();
